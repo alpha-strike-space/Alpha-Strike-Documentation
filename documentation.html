@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="The Alpha-Strike Leaderboard Application Programmer Interface for Eve Frontier">
+    <meta name="keywords" content="API, Documentation, References, Eve Frontier">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation for Alpha-Strike API</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="documentation.png">
+</head>
+
+<body>
+    <div class="main-body">
+        <nav id="navbar">
+            <header>Documentation Menu</header>
+            <a href="#Intro" class="nav-link">
+                What is an API?</a>
+            <a href="#Endpoints" class="nav-link">
+                Endpoints</a>
+            <a href="#Websockets" class="nav-link">
+                Websockets</a>
+            <a href="#Development" class="nav-link">
+                Development</a>
+        </nav>
+
+        <main id="main-doc">
+            <section class="main-section" id="Intro">
+                <header>
+                    What is an Application Programmer Interface (API)?
+                </header>
+                <p>
+                    In principle, an API is a way to define endpoints of
+		    data on a server which a client may access over Hyper Text Transfer Protocols (<strong>HTTP</strong>) that we will use.
+		    Many of the most common HTTP methods we see today are <strong>GET</strong>, <strong>POST</strong>, <strong>PUT</strong>, and <strong>DELETE</strong>.
+		</p>
+		<p> 
+		    Generally, a client  will start a request and response
+		    handshake with the server via the API. A process is started
+		    which may be a request or anything that shall trigger an 
+		    external event for the API. 
+		</p>
+		<p>
+		    A server on which the API is running will handle that handshake
+		    event. The event may involve authentication, validation, retreival,
+		    deletion, updating, or manipulation of a data set.
+                </p>
+		<ul>
+		  <li>Endpoints are stand-alone user resource link (URL) to provide specific access to a resource or dataset.</li>
+		  <li>Methods indicates the operation called by the client to the API to perform an action.</li>
+		  <li>Parameters are a variable passed to the endpoint for instruction.</li>
+		  <li>Request header is a value representing details about request process, i.e. formatting of datasets or credentials.</li>
+		  <li>Body is the center piece for request and response handshake messaging. It contains the datasets of the resource or status codes.</li>
+		  <li>Response header is much like a request header, but for information about server response</li>
+		</ul>
+                <p> 
+		   It is important to note the concept of web applications today run mainly on HTTP.
+		   Moreover, HTTP protocols began in the early 1960's with the Xanadu project
+		   by Ted Nelson and his team. HTTP was further developed and standardized
+		   by a team at the European Center for Nuclear Research (CERN) by Tim Burners-Lee
+		   to promote his World Wide Web Project (WWW) in the early 1990s with his Hyper Text Markup Language
+		   (HTML) to make information available. You may read more about <a href="https://httpwg.org/specs/rfc9110.html">HTTP standards<a> at their website for specifications and documentation.
+		</p>
+		<p>
+		   Regardless, we saw further development of our ability to interact with clients and servers around the mid-1990s
+		   from Daniel Stenberg with his <a href="https://curl.se/docs/">cURL library<a>. Written in the <a href="https://isocpp.org/std/the-standard">C-langauge<a>, it is the foundation
+		   with which most of us interact with APIs across the WWW and you will find his library on just about any computer. Let us look at a basic example in your terminal by running the following
+                </p>
+		<pre>
+                <code>
+			curl -X GET "https://api.alpha-strike.space/health"
+                </code>
+		</pre>
+                <p> 
+		   As long as the server is running, you should recieve a status code of 200 which respresents that everything is 'OKAY' so to speak. <br>
+		   You will see many status codes, whether interacting with an API or just loading a URL. The most important codes are the following
+                </p>
+                <ul>
+                    <li>Code: 100 means progress.</li>
+                    <li>Code: 200 means success.</li>
+                    <li>Code: 300 means redirection, sometimes cache (temporary storage) rules.</li>
+                    <li>Code: 400 means client side error.</li>
+                    <li>Code: 500 means server side error.</li>
+                </ul>
+            </section>
+
+            <section class="main-section" id="Endpoints">
+                <header>
+                    Endpoints
+                </header>
+                <p>
+		    We shall list each endpoint and the corresponing command to retrieve information with our basis library <a href="https://curl.se/docs/">cURL<a>, subsquently using the <a href="https://www.r-project.org/">R language<a> package <a href="https://httr2.r-lib.org/index.html">httr2<a> for a higher-level programmed example. It should be also noted that if you want to use the <a href="https://www.r-project.org/">R language<a> for a web application, you may take a look at a <a href="https://github.com/kandrsn99/Web-Hosting-Rocker-Nginx-Proxy">Rocker Shiny<a> repository using <a href="https://shiny.posit.co/r/getstarted/shiny-basics/lesson1/">R Shiny<a>. Keep in mind our base url is <strong>https://api.alpha-strike.space/</strong> for your reference.                 
+                </p>
+                <p><b>/health</b> return the health of server<br>
+		    <pre>
+		    <code>
+			curl -X GET "https://api.alpha-strike.space/health"
+                    </code>
+		    </pre>
+		    <pre>
+		    <code>
+			library(httr2)
+			# API call in R.
+  			url <- "https://api.alpha-strike.space/health"
+  			# Start the request from the given URL.
+  			url_request <- httr2::request(url) |>
+    				httr2::req_error(is_error = ~ FALSE)
+  			url_response <- httr2::req_perform(url_request) # Get the response.
+  			# Check for error in HTTP response.
+  			if (httr2::resp_status(url_response) == 200) {
+				url_response$headers$`content-type` <- "application/json"
+    				json_package <- url_response |> httr2::resp_body_json(url_response) # Spit JSON and store.
+    				return(json_package) # Return the JSON variable.
+  			} else {
+    				response_code <- httr2::resp_status(url_response)
+    				response_string <- httr2::resp_status_desc(url_response)
+    				http_frame <- data.frame(code = response_code, description = response_string)
+    				return(http_frame)
+  			}
+		    </code>
+		    </pre>
+                    <br>
+                    <b>/incident</b> return all incidents, or by victim/killer name and system. Please note that you may add filters based on <b>day</b>, <b>week</b>, or <b>month</b> regarding the time stamps<br>
+		    <pre>
+		    <code>
+			curl -X GET "https://api.alpha-strike.space/incident"
+                    </code>
+		    </pre>
+		    <pre>
+		    <code>
+			library(httr2)
+			# API call in R.
+  			url <- "https://api.alpha-strike.space/incident"
+  			# Start the request from the given URL.
+  			url_request <- httr2::request(url) |>
+    				httr2::req_error(is_error = ~ FALSE)
+  			url_response <- httr2::req_perform(url_request) # Get the response.
+  			# Check for error in HTTP response.
+  			if (httr2::resp_status(url_response) == 200) {
+				url_response$headers$`content-type` <- "application/json"
+    				json_package <- url_response |> httr2::resp_body_json(url_response) # Spit JSON and store.
+    				return(json_package) # Return the JSON variable.
+  			} else {
+    				response_code <- httr2::resp_status(url_response)
+    				response_string <- httr2::resp_status_desc(url_response)
+    				http_frame <- data.frame(code = response_code, description = response_string)
+    				return(http_frame)
+  			}
+		    </code>
+		    </pre>
+		    <pre>
+		    <code>
+			curl -X GET "https://api.alpha-strike.space/incident?name=STRING_HERE"
+                    </code>
+		    </pre>
+		    <pre>
+		    <code>
+			library(httr2)
+			# API call in R.
+  			url <- "https://api.alpha-strike.space/incident?name=STRING_HERE"
+  			# Start the request from the given URL.
+  			url_request <- httr2::request(url) |>
+    			  httr2::req_error(is_error = ~ FALSE)
+  			url_response <- httr2::req_perform(url_request) # Get the response.
+  			# Check for error in HTTP response.
+  			if (httr2::resp_status(url_response) == 200) {
+				url_response$headers$`content-type` <- "application/json"
+    				json_package <- url_response |> httr2::resp_body_json(url_response) # Spit JSON and store.
+    				return(json_package) # Return the JSON variable.
+  			} else {
+    				response_code <- httr2::resp_status(url_response)
+    				response_string <- httr2::resp_status_desc(url_response)
+    				http_frame <- data.frame(code = response_code, description = response_string)
+    				return(http_frame)
+  			}
+		    </code>
+		    </pre>
+		    <pre>
+		    <code>
+			curl -X GET "https://api.alpha-strike.space/incident?system=STRING_OR_NUMERICAL_ID_HERE"
+                    </code>
+		    </pre>
+		    <pre>
+		    <code>
+			library(httr2)
+			# API call in R.
+  			url <- "https://api.alpha-strike.space/incident?system=STRING_OR_NUMERICAL_ID_HERE"
+  			# Start the request from the given URL.
+  			url_request <- httr2::request(url) |>
+    			  httr2::req_error(is_error = ~ FALSE)
+  			url_response <- httr2::req_perform(url_request) # Get the response.
+  			# Check for error in HTTP response.
+  			if (httr2::resp_status(url_response) == 200) {
+				url_response$headers$`content-type` <- "application/json"
+    				json_package <- url_response |> httr2::resp_body_json(url_response) # Spit JSON and store.
+    				return(json_package) # Return the JSON variable.
+  			} else {
+    				response_code <- httr2::resp_status(url_response)
+    				response_string <- httr2::resp_status_desc(url_response)
+    				http_frame <- data.frame(code = response_code, description = response_string)
+    				return(http_frame)
+  			}
+		    </code>
+		    </pre>
+		    <pre>
+		    <code>
+			curl -X GET "https://api.alpha-strike.space/incident?filter=month"
+                    </code>
+		    </pre>
+		    <pre>
+		    <code>
+			library(httr2)
+			# API call in R.
+  			url <- "https://api.alpha-strike.space/incident?filter=month"
+  			# Start the request from the given URL.
+  			url_request <- httr2::request(url) |>
+    				httr2::req_error(is_error = ~ FALSE)
+  			url_response <- httr2::req_perform(url_request) # Get the response.
+  			# Check for error in HTTP response.
+  			if (httr2::resp_status(url_response) == 200) {
+				url_response$headers$`content-type` <- "application/json"
+    				json_package <- url_response |> httr2::resp_body_json(url_response) # Spit JSON and store.
+    				return(json_package) # Return the JSON variable.
+  			} else {
+    				response_code <- httr2::resp_status(url_response)
+    				response_string <- httr2::resp_status_desc(url_response)
+    				http_frame <- data.frame(code = response_code, description = response_string)
+    				return(http_frame)
+  			}
+		    </code>
+		    </pre>
+		    <b>/location</b> return all systems, or by id and name.<br>
+		    <pre>
+		    <code>
+			curl -X GET "https://api.alpha-strike.space/location"
+                    </code>
+		    </pre>
+		    <pre>
+		    <code>
+			library(httr2)
+			# API call in R.
+  			url <- "https://api.alpha-strike.space/location"
+  			# Start the request from the given URL.
+  			url_request <- httr2::request(url) |>
+    				httr2::req_error(is_error = ~ FALSE)
+  			url_response <- httr2::req_perform(url_request) # Get the response.
+  			# Check for error in HTTP response.
+  			if (httr2::resp_status(url_response) == 200) {
+				url_response$headers$`content-type` <- "application/json"
+    				json_package <- url_response |> httr2::resp_body_json(url_response) # Spit JSON and store.
+    				return(json_package) # Return the JSON variable.
+  			} else {
+    				response_code <- httr2::resp_status(url_response)
+    				response_string <- httr2::resp_status_desc(url_response)
+    				http_frame <- data.frame(code = response_code, description = response_string)
+    				return(http_frame)
+  			}
+		    </code>
+		    </pre>
+		    <pre>
+		    <code>
+			curl -X GET "https://api.alpha-strike.space/location?system=STRING_OR_NUMERICAL_ID_HERE"
+                    </code>
+		    </pre>
+		    <pre>
+		    <code>
+			library(httr2)
+			# API call in R.
+  			url <- "https://api.alpha-strike.space/location?system=STRING_OR_NUMERICAL_ID_HERE"
+  			# Start the request from the given URL.
+  			url_request <- httr2::request(url) |>
+    				httr2::req_error(is_error = ~ FALSE)
+  			url_response <- httr2::req_perform(url_request) # Get the response.
+  			# Check for error in HTTP response.
+  			if (httr2::resp_status(url_response) == 200) {
+				url_response$headers$`content-type` <- "application/json"
+    				json_package <- url_response |> httr2::resp_body_json(url_response) # Spit JSON and store.
+    				return(json_package) # Return the JSON variable.
+  			} else {
+    				response_code <- httr2::resp_status(url_response)
+    				response_string <- httr2::resp_status_desc(url_response)
+    				http_frame <- data.frame(code = response_code, description = response_string)
+    				return(http_frame)
+  			}
+		    </code>
+		    </pre>
+                    <b>/totals</b> return all totals, or by victim/killer name and system. Please note that you may add filters based on <b>day</b>, <b>week</b>, or <b>month</b> regarding the time stamps<br>
+		    <pre>
+		    <code>
+			curl -X GET "https://api.alpha-strike.space/totals"
+                    </code>
+		    </pre>
+		    <pre>
+		    <code>
+			library(httr2)
+			# API call in R.
+  			url <- "https://api.alpha-strike.space/totals"
+  			# Start the request from the given URL.
+  			url_request <- httr2::request(url) |>
+    				httr2::req_error(is_error = ~ FALSE)
+  			url_response <- httr2::req_perform(url_request) # Get the response.
+  			# Check for error in HTTP response.
+  			if (httr2::resp_status(url_response) == 200) {
+				url_response$headers$`content-type` <- "application/json"
+    				json_package <- url_response |> httr2::resp_body_json(url_response) # Spit JSON and store.
+    				return(json_package) # Return the JSON variable.
+  			} else {
+    				response_code <- httr2::resp_status(url_response)
+    				response_string <- httr2::resp_status_desc(url_response)
+    				http_frame <- data.frame(code = response_code, description = response_string)
+    				return(http_frame)
+  			}
+		    </code>
+		    </pre>
+		    <pre>
+		    <code>
+			curl -X GET "https://api.alpha-strike.space/totals?name=STRING_HERE"
+                    </code>
+		    </pre>
+		    <pre>
+		    <code>
+			library(httr2)
+			# API call in R.
+  			url <- "https://api.alpha-strike.space/totals?name=STRING_HERE"
+  			# Start the request from the given URL.
+  			url_request <- httr2::request(url) |>
+    				httr2::req_error(is_error = ~ FALSE)
+  			url_response <- httr2::req_perform(url_request) # Get the response.
+  			# Check for error in HTTP response.
+  			if (httr2::resp_status(url_response) == 200) {
+				url_response$headers$`content-type` <- "application/json"
+    				json_package <- url_response |> httr2::resp_body_json(url_response) # Spit JSON and store.
+    				return(json_package) # Return the JSON variable.
+  			} else {
+    				response_code <- httr2::resp_status(url_response)
+    				response_string <- httr2::resp_status_desc(url_response)
+    				http_frame <- data.frame(code = response_code, description = response_string)
+    				return(http_frame)
+  			}
+		    </code>
+		    </pre>
+		    <pre>
+		    <code>
+			curl -X GET "https://api.alpha-strike.space/totals?system=STRING_OR_ID_HERE"
+                    </code>
+		    </pre>
+		    <pre>
+		    <code>
+			library(httr2)
+			# API call in R.
+  			url <- "https://api.alpha-strike.space/totals?system=STRING_OR_ID_HERE"
+  			# Start the request from the given URL.
+  			url_request <- httr2::request(url) |>
+    				httr2::req_error(is_error = ~ FALSE)
+  			url_response <- httr2::req_perform(url_request) # Get the response.
+  			# Check for error in HTTP response.
+  			if (httr2::resp_status(url_response) == 200) {
+				url_response$headers$`content-type` <- "application/json"
+    				json_package <- url_response |> httr2::resp_body_json(url_response) # Spit JSON and store.
+    				return(json_package) # Return the JSON variable.
+  			} else {
+    				response_code <- httr2::resp_status(url_response)
+    				response_string <- httr2::resp_status_desc(url_response)
+    				http_frame <- data.frame(code = response_code, description = response_string)
+    				return(http_frame)
+  			}
+		    </code>
+		    </pre>
+		    <pre>
+		    <code>
+			curl -X GET "https://api.alpha-strike.space/totals?filter=month"
+                    </code>
+		    </pre>
+		    <pre>
+		    <code>
+			library(httr2)
+			# API call in R.
+  			url <- "https://api.alpha-strike.space/totals?filter=month"
+  			# Start the request from the given URL.
+  			url_request <- httr2::request(url) |>
+    				httr2::req_error(is_error = ~ FALSE)
+  			url_response <- httr2::req_perform(url_request) # Get the response.
+  			# Check for error in HTTP response.
+  			if (httr2::resp_status(url_response) == 200) {
+				url_response$headers$`content-type` <- "application/json"
+    				json_package <- url_response |> httr2::resp_body_json(url_response) # Spit JSON and store.
+    				return(json_package) # Return the JSON variable.
+  			} else {
+    				response_code <- httr2::resp_status(url_response)
+    				response_string <- httr2::resp_status_desc(url_response)
+    				http_frame <- data.frame(code = response_code, description = response_string)
+    				return(http_frame)
+  			}
+		    </code>
+		    </pre>
+                </p>
+            </section>
+
+            <section class="main-section" id="Websockets">
+                <header>
+                    Websockets
+                </header>
+		<p>
+		    An outbound websocket on the server for latest mails. Remember, the base url is <strong>wss://api.alpha-strike.space/ws/</strong> for your reference. It must be noted that we can't use the previous package in R and must use <a href="https://rstudio.github.io/websocket/">websocket<a> for interaction with the server. You may need the additional dependency <a href="https://cran.r-project.org/web/packages/jsonlite/index.html">jsonlite<a> for parsing information.
+		</p>
+                    <b>/mails</b> return a message, and the latest incident on the frontier.<br>
+		    <pre>
+		    <code>
+			wscat -c "wss://api.alpha-strike.space/ws/mails"
+	            </code>
+		    </pre>
+		    <pre>
+		    <code>
+			library(websocket)
+			library(jsonlite)
+			# WebSocket URL in R
+			url <- "wss://api.alpha-strike.space/ws/mails"
+			# Create WebSocket connection
+			web_socket <- WebSocket$new(url)
+			# Message handling
+			web_socket$onMessage(function(event) {
+  				received_message <- event$data  # Access the received message
+  				print(paste("Received:", received_message))  # Process the message
+  
+  				# Example: Parse JSON if needed
+  				if (grepl("{", received_message)) {
+    				parsed_data <- jsonlite::fromJSON(received_message)
+    				print(parsed_data)
+  			})	
+			# Error handling
+			web_socket$onError(function(err) {
+  				print(paste("Error:", err$message))
+			})
+			# Keep alive
+			Sys.sleep(10) # Adjust time
+			# Close connection
+			web_socket$close()
+		    </code>
+		    </pre>
+                </p>
+            </section>
+
+            <section class="main-section" id="Development">
+                <header>
+                    Development
+                </header>
+                <p>
+		    I shamelessly promote myself, Professor Killshot, for developing this website to host incident mails from the game <a href="https://www.evefrontier.com/en">Eve Frontier<a>. The 		    development of this website is unusual in the sense that most have been written in Python, PHP, or some sort of Java framework. I took 		    a different route by utilizing C++ for handling a PostgreSQL database and HTML for the beautiful display in conjunction with NGINX 		    and Cloudflare for handling requests. You may find my repository that I built by utilizing <a href="https://github.com/kandrsn99/Docker-PostgreSQL-and-Crow-API">Docker, Crow cpp, NGINX, and PostgreSQL<a> and learn more about it. The purpose of this endeavour is to give myself confidence handling data across my two favorite 		    languages, support a website in its display, and learn new things while giving those who play <a href="https://www.evefrontier.com/en">Eve Frontier<a> a place to show off their 		    criminally good pew pew skills. Good luck, have fun o7.
+                </p>
+                <ul>
+                    <li><a href="https://isocpp.org/std/the-standard">Modern C++ Standards<a>, <a href="https://www.postgresql.org/">PostgreSQL<a></li>
+                    <li><a href="https://pqxx.org/development/libpqxx/#:~:text=Quick%20links:%201.%20Frequently%20Asked%20Questions">libqxx<a>, <a href="https://json.nlohmann.me/">nlohmann/json<a>, <a href="https://crowcpp.org/master/">crow<a></li>
+                    <li><a href="https://www.cloudflare.com/">Cloudflare<a>, <a href="https://nginx.org/en/">NGINX<a></li>
+		    <li><a href="https://discord.gg/dzEc68pw2e">DISCORD<a> for complaints or suggestions.</li>
+		    <li><a href="https://github.com/alpha-strike-space">Main GitHub Organization<a></li>
+                </ul>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
