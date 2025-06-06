@@ -3,7 +3,8 @@ This is the documentation page on the website for the Application Programmer Int
 
 It is self contained with the entire styling and javascript in the same file for simplicity. You may just edit this in a notepad on your machine and make any changes. The changes may be represented in your favorite browser for development.
 
-Otherwise, you may run this with node by creating a virtual server.
+Otherwise, you may run this with node by creating a virtual server. You will do this locally, not globally here.
 
 > npm install http-server
-> http-server
+
+> npx http-server
