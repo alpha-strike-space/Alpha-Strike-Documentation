@@ -8,72 +8,243 @@
     <title>Documentation for Alpha-Strike API</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="documentation.png">
+    <style>
+        /* Main Layout */
+        .main-body {
+            display: flex;
+            max-width: 960px;
+            margin: 0 auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            min-height: 100vh;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Navigation Bar */
+        #navbar {
+            width: 200px;
+            background-color:  #fff;
+            padding: 20px;
+            box-sizing: border-box;
+            flex-shrink: 0;
+        }
+
+        #navbar header {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Global Link Reset */
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Standard Link Styling (not within code blocks) */
+        a:not(pre code a) {
+            color: #007bff;
+        }
+
+        a:not(pre code a):hover {
+            text-decoration: underline;
+        }
+
+        /* Navigation Link Specifics */
+        .nav-link {
+            display: block;
+            padding: 12px 15px;
+            margin-bottom: 5px;
+            border-bottom: 1px solid #eee;
+            color: #555;
+            transition: background-color 0.3s ease, color 0.3s ease, border-radius 0.3s ease;
+            border-radius: 6px;
+            text-align: left;
+        }
+
+        .nav-link:last-of-type {
+            border-bottom: none;
+        }
+
+        .nav-link:hover {
+            background-color: #e9e9e9;
+            color: #000;
+            text-decoration: none;
+        }
+
+        /* Main Documentation Content Area */
+        #main-doc {
+            flex-grow: 1;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #fff;
+        }
+
+        /* Text and List Styling */
+        p, ul {
+            line-height: 1.6;
+            margin-bottom: 1em;
+        }
+
+        /* Section Headers */
+        .main-section header {
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        /* Inline Code Elements */
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.95em;
+            white-space: nowrap;
+        }
+
+        /* Preformatted and Code Blocks */
+        pre, pre code {
+            text-align: left !important;
+            white-space: pre-wrap;
+            word-break: break-word;
+            font-family: monospace;
+            color: inherit;
+            margin: 1em 0;
+            padding: 10px;
+            overflow-x: auto;
+            padding-left: 0; /* Align pre text to the very left */
+            margin-left: 0; /* Remove any left margin */
+        }
+
+        /* Links within Code Blocks */
+        pre code a,
+        pre code a:hover,
+        pre code a:visited,
+        pre code a:active {
+            color: inherit !important;
+            text-decoration: none !important;
+        }
+
+        /* Input Fields and Select Dropdowns */
+        input[type="text"], select {
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: calc(100% - 16px);
+            box-sizing: border-box;
+            font-size: 0.9em;
+        }
+
+        /* Labels for Inputs */
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        /* Generate Button */
+        .generate-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .generate-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .main-body {
+                flex-direction: column;
+                max-width: 100%;
+                margin: 0;
+                border-radius: 0;
+            }
+
+            #navbar {
+                width: 100%;
+                padding: 10px;
+                border-right: none;
+                border-bottom: 1px solid #e0e0e0;
+            }
+
+            #navbar header {
+                margin-bottom: 10px;
+            }
+
+            .nav-link {
+                border-bottom: none;
+            }
+
+            #main-doc {
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 
 <body>
     <div class="main-body">
         <nav id="navbar">
             <header>Documentation Menu</header>
-            <a href="#Intro" class="nav-link">
-                What is an API?</a>
-            <a href="#Endpoints" class="nav-link">
-                Endpoints</a>
-            <a href="#Websockets" class="nav-link">
-                Websockets</a>
-            <a href="#Development" class="nav-link">
-                Development</a>
+            <a href="#Intro" class="nav-link">What is an API?</a>
+            <a href="#Endpoints" class="nav-link">Endpoints</a>
+            <a href="#Websockets" class="nav-link">Websockets</a>
+            <a href="#Development" class="nav-link">Development</a>
         </nav>
 
         <main id="main-doc">
             <section class="main-section" id="Intro">
-                <header>
-                    What is an Application Programmer Interface (API)?
-                </header>
+                <header>What is an Application Programmer Interface (API)?</header>
                 <p>
-                    In principle, an API is a way to define endpoints of
-		    data on a server which a client may access over Hyper Text Transfer Protocols (<strong>HTTP</strong>) that we will use.
-		    Many of the most common HTTP methods we see today are <strong>GET</strong>, <strong>POST</strong>, <strong>PUT</strong>, and <strong>DELETE</strong>.
-		</p>
-		<p> 
-		    Generally, a client  will start a request and response
-		    handshake with the server via the API. A process is started
-		    which may be a request or anything that shall trigger an 
-		    external event for the API. 
-		</p>
-		<p>
-		    A server on which the API is running will handle that handshake
-		    event. The event may involve authentication, validation, retreival,
-		    deletion, updating, or manipulation of a data set.
+                    In principle, an API is a way to define endpoints of data on a server which a client may access over Hyper Text Transfer Protocols (<strong>HTTP</strong>) that we will use.
+                    Many of the most common HTTP methods we see today are <strong>GET</strong>, <strong>POST</strong>, and <strong>DELETE</strong>.
                 </p>
-		<ul>
-		  <li>Endpoints are stand-alone user resource link (URL) to provide specific access to a resource or dataset.</li>
-		  <li>Methods indicates the operation called by the client to the API to perform an action.</li>
-		  <li>Parameters are a variable passed to the endpoint for instruction.</li>
-		  <li>Request header is a value representing details about request process, i.e. formatting of datasets or credentials.</li>
-		  <li>Body is the center piece for request and response handshake messaging. It contains the datasets of the resource or status codes.</li>
-		  <li>Response header is much like a request header, but for information about server response</li>
-		</ul>
-                <p> 
-		   It is important to note the concept of web applications today run mainly on HTTP.
-		   Moreover, HTTP protocols began in the early 1960's with the Xanadu project
-		   by Ted Nelson and his team. HTTP was further developed and standardized
-		   by a team at the European Center for Nuclear Research (CERN) by Tim Burners-Lee
-		   to promote his World Wide Web Project (WWW) in the early 1990s with his Hyper Text Markup Language
-		   (HTML) to make information available. You may read more about <a href="https://httpwg.org/specs/rfc9110.html">HTTP standards<a> at their website for specifications and documentation.
-		</p>
-		<p>
-		   Regardless, we saw further development of our ability to interact with clients and servers around the mid-1990s
-		   from Daniel Stenberg with his <a href="https://curl.se/docs/">cURL library<a>. Written in the <a href="https://isocpp.org/std/the-standard">C-langauge<a>, it is the foundation
-		   with which most of us interact with APIs across the WWW and you will find his library on just about any computer. Let us look at a basic example in your terminal by running the following
+                <p>
+                    Generally, a client will start a request and response handshake with the server via the server API. A process is started
+                    which may be a request or anything that shall trigger an external event for the API.
                 </p>
-		<pre>
-                <code>
-			curl -X GET "https://api.alpha-strike.space/health"
-                </code>
-		</pre>
-                <p> 
-		   As long as the server is running, you should recieve a status code of 200 which respresents that everything is 'OKAY' so to speak. <br>
-		   You will see many status codes, whether interacting with an API or just loading a URL. The most important codes are the following
+                <p>
+                    A server on which the API is running will handle that handshake event. The event may involve authentication, validation, retrieval,
+                    deletion, updating, or manipulation of a data set.
+                </p>
+                <ul>
+                    <li>Endpoints are stand-alone user resource link (URL) to provide specific access to a resource or dataset.</li>
+                    <li>Methods indicates the operation called by the client to the API to perform an action.</li>
+                    <li>Parameters are a variable passed to the endpoint for instruction.</li>
+                    <li>Request header is a value representing details about request process, i.e. formatting of datasets or credentials.</li>
+                    <li>Body is the center piece for request and response handshake messaging. It contains the datasets of the resource or status codes.</li>
+                    <li>Response header is much like a request header, but for information about server response.</li>
+                </ul>
+                <p>
+                    It is important to note the concept of web applications today run mainly on HTTP.
+                    Moreover, HTTP protocols began in the early 1960's with the Xanadu project
+                    by Ted Nelson and his team. HTTP was further developed and standardized
+                    by a team at the European Center for Nuclear Research (CERN) by Tim Burners-Lee
+                    to promote his World Wide Web Project (WWW) in the early 1990s with his Hyper Text Markup Language
+                    (HTML) to make information available. You may read more about HTTP standards on their website for specifications and documentation.
+                </p>
+                <p>
+                    Regardless, we saw further development of our ability to interact with clients and servers around the mid-1990s
+                    from Daniel Stenberg with his cURL library. Written in the C-language, it is the foundation
+                    with which most of us interact with APIs across the WWW and you will find his library on just about any computer. Let us look at a basic example in your terminal by running the following: <code>curl -X GET "https://api.alpha-strike.space/health"</code>
+                </p>
+                <p>
+                    As long as the server is running, you should receive a status code of 200 which represents that everything is 'OKAY' so to speak. <br>
+                    You will see many status codes, whether interacting with an API or just loading a URL. The most important codes are the following:
                 </p>
                 <ul>
                     <li>Code: 100 means progress.</li>
@@ -85,377 +256,299 @@
             </section>
 
             <section class="main-section" id="Endpoints">
-                <header>
-                    Endpoints
-                </header>
+                <header>Endpoints</header>
                 <p>
-		    We shall list each endpoint and the corresponing command to retrieve information with our basis library <a href="https://curl.se/docs/">cURL<a>, subsquently using the <a href="https://www.r-project.org/">R language<a> package <a href="https://httr2.r-lib.org/index.html">httr2<a> for a higher-level programmed example. It should be also noted that if you want to use the <a href="https://www.r-project.org/">R language<a> for a web application, you may take a look at a <a href="https://github.com/kandrsn99/Web-Hosting-Rocker-Nginx-Proxy">Rocker Shiny<a> repository using <a href="https://shiny.posit.co/r/getstarted/shiny-basics/lesson1/">R Shiny<a>. Keep in mind our base url is <strong>https://api.alpha-strike.space/</strong> for your reference.                 
+                    We shall list each endpoint and the corresponding command to retrieve information with our basis library cURL. Keep in mind our base url is <strong>https://api.alpha-strike.space/</strong> for your reference. Note, that you may hide output by hitting the generate button again.
                 </p>
-                <p><b>/health</b> return the health of server<br>
-		    <pre>
-		    <code>
-			curl -X GET "https://api.alpha-strike.space/health"
-                    </code>
-		    </pre>
-		    <pre>
-		    <code>
-			library(httr2)
-			# API call in R.
-  			url <- "https://api.alpha-strike.space/health"
-  			# Start the request from the given URL.
-  			url_request <- httr2::request(url) |>
-    				httr2::req_error(is_error = ~ FALSE)
-  			url_response <- httr2::req_perform(url_request) # Get the response.
-  			# Check for error in HTTP response.
-  			if (httr2::resp_status(url_response) == 200) {
-				url_response$headers$`content-type` <- "application/json"
-    				json_package <- url_response |> httr2::resp_body_json(url_response) # Spit JSON and store.
-    				return(json_package) # Return the JSON variable.
-  			} else {
-    				response_code <- httr2::resp_status(url_response)
-    				response_string <- httr2::resp_status_desc(url_response)
-    				http_frame <- data.frame(code = response_code, description = response_string)
-    				return(http_frame)
-  			}
-		    </code>
-		    </pre>
-                    <br>
-                    <b>/incident</b> return all incidents, or by victim/killer name and system. Please note that you may add filters based on <b>day</b>, <b>week</b>, or <b>month</b> regarding the time stamps<br>
-		    <pre>
-		    <code>
-			curl -X GET "https://api.alpha-strike.space/incident"
-                    </code>
-		    </pre>
-		    <pre>
-		    <code>
-			library(httr2)
-			# API call in R.
-  			url <- "https://api.alpha-strike.space/incident"
-  			# Start the request from the given URL.
-  			url_request <- httr2::request(url) |>
-    				httr2::req_error(is_error = ~ FALSE)
-  			url_response <- httr2::req_perform(url_request) # Get the response.
-  			# Check for error in HTTP response.
-  			if (httr2::resp_status(url_response) == 200) {
-				url_response$headers$`content-type` <- "application/json"
-    				json_package <- url_response |> httr2::resp_body_json(url_response) # Spit JSON and store.
-    				return(json_package) # Return the JSON variable.
-  			} else {
-    				response_code <- httr2::resp_status(url_response)
-    				response_string <- httr2::resp_status_desc(url_response)
-    				http_frame <- data.frame(code = response_code, description = response_string)
-    				return(http_frame)
-  			}
-		    </code>
-		    </pre>
-		    <pre>
-		    <code>
-			curl -X GET "https://api.alpha-strike.space/incident?name=STRING_HERE"
-                    </code>
-		    </pre>
-		    <pre>
-		    <code>
-			library(httr2)
-			# API call in R.
-  			url <- "https://api.alpha-strike.space/incident?name=STRING_HERE"
-  			# Start the request from the given URL.
-  			url_request <- httr2::request(url) |>
-    			  httr2::req_error(is_error = ~ FALSE)
-  			url_response <- httr2::req_perform(url_request) # Get the response.
-  			# Check for error in HTTP response.
-  			if (httr2::resp_status(url_response) == 200) {
-				url_response$headers$`content-type` <- "application/json"
-    				json_package <- url_response |> httr2::resp_body_json(url_response) # Spit JSON and store.
-    				return(json_package) # Return the JSON variable.
-  			} else {
-    				response_code <- httr2::resp_status(url_response)
-    				response_string <- httr2::resp_status_desc(url_response)
-    				http_frame <- data.frame(code = response_code, description = response_string)
-    				return(http_frame)
-  			}
-		    </code>
-		    </pre>
-		    <pre>
-		    <code>
-			curl -X GET "https://api.alpha-strike.space/incident?system=STRING_OR_NUMERICAL_ID_HERE"
-                    </code>
-		    </pre>
-		    <pre>
-		    <code>
-			library(httr2)
-			# API call in R.
-  			url <- "https://api.alpha-strike.space/incident?system=STRING_OR_NUMERICAL_ID_HERE"
-  			# Start the request from the given URL.
-  			url_request <- httr2::request(url) |>
-    			  httr2::req_error(is_error = ~ FALSE)
-  			url_response <- httr2::req_perform(url_request) # Get the response.
-  			# Check for error in HTTP response.
-  			if (httr2::resp_status(url_response) == 200) {
-				url_response$headers$`content-type` <- "application/json"
-    				json_package <- url_response |> httr2::resp_body_json(url_response) # Spit JSON and store.
-    				return(json_package) # Return the JSON variable.
-  			} else {
-    				response_code <- httr2::resp_status(url_response)
-    				response_string <- httr2::resp_status_desc(url_response)
-    				http_frame <- data.frame(code = response_code, description = response_string)
-    				return(http_frame)
-  			}
-		    </code>
-		    </pre>
-		    <pre>
-		    <code>
-			curl -X GET "https://api.alpha-strike.space/incident?filter=month"
-                    </code>
-		    </pre>
-		    <pre>
-		    <code>
-			library(httr2)
-			# API call in R.
-  			url <- "https://api.alpha-strike.space/incident?filter=month"
-  			# Start the request from the given URL.
-  			url_request <- httr2::request(url) |>
-    				httr2::req_error(is_error = ~ FALSE)
-  			url_response <- httr2::req_perform(url_request) # Get the response.
-  			# Check for error in HTTP response.
-  			if (httr2::resp_status(url_response) == 200) {
-				url_response$headers$`content-type` <- "application/json"
-    				json_package <- url_response |> httr2::resp_body_json(url_response) # Spit JSON and store.
-    				return(json_package) # Return the JSON variable.
-  			} else {
-    				response_code <- httr2::resp_status(url_response)
-    				response_string <- httr2::resp_status_desc(url_response)
-    				http_frame <- data.frame(code = response_code, description = response_string)
-    				return(http_frame)
-  			}
-		    </code>
-		    </pre>
-		    <b>/location</b> return all systems, or by id and name.<br>
-		    <pre>
-		    <code>
-			curl -X GET "https://api.alpha-strike.space/location"
-                    </code>
-		    </pre>
-		    <pre>
-		    <code>
-			library(httr2)
-			# API call in R.
-  			url <- "https://api.alpha-strike.space/location"
-  			# Start the request from the given URL.
-  			url_request <- httr2::request(url) |>
-    				httr2::req_error(is_error = ~ FALSE)
-  			url_response <- httr2::req_perform(url_request) # Get the response.
-  			# Check for error in HTTP response.
-  			if (httr2::resp_status(url_response) == 200) {
-				url_response$headers$`content-type` <- "application/json"
-    				json_package <- url_response |> httr2::resp_body_json(url_response) # Spit JSON and store.
-    				return(json_package) # Return the JSON variable.
-  			} else {
-    				response_code <- httr2::resp_status(url_response)
-    				response_string <- httr2::resp_status_desc(url_response)
-    				http_frame <- data.frame(code = response_code, description = response_string)
-    				return(http_frame)
-  			}
-		    </code>
-		    </pre>
-		    <pre>
-		    <code>
-			curl -X GET "https://api.alpha-strike.space/location?system=STRING_OR_NUMERICAL_ID_HERE"
-                    </code>
-		    </pre>
-		    <pre>
-		    <code>
-			library(httr2)
-			# API call in R.
-  			url <- "https://api.alpha-strike.space/location?system=STRING_OR_NUMERICAL_ID_HERE"
-  			# Start the request from the given URL.
-  			url_request <- httr2::request(url) |>
-    				httr2::req_error(is_error = ~ FALSE)
-  			url_response <- httr2::req_perform(url_request) # Get the response.
-  			# Check for error in HTTP response.
-  			if (httr2::resp_status(url_response) == 200) {
-				url_response$headers$`content-type` <- "application/json"
-    				json_package <- url_response |> httr2::resp_body_json(url_response) # Spit JSON and store.
-    				return(json_package) # Return the JSON variable.
-  			} else {
-    				response_code <- httr2::resp_status(url_response)
-    				response_string <- httr2::resp_status_desc(url_response)
-    				http_frame <- data.frame(code = response_code, description = response_string)
-    				return(http_frame)
-  			}
-		    </code>
-		    </pre>
+                <p><b>/health</b> return the health of server. Example: <code>curl -X GET "https://api.alpha-strike.space/health"</code><br>
+                    <div class="endpoint-controls">
+                        <button class="generate-button" onclick="generateCurlCommand('/health', null, null, null, null, 'health-generated-curl', 'health-output-dynamic')">Generate Health cURL Command</button>
+                        <pre id="health-generated-curl"><code>curl -X GET "https://api.alpha-strike.space/health"</code></pre>
+                        <pre id="health-output-dynamic"></pre>
+                    </div>
+                </p>
+                <p><b>/incident</b> return all incidents, or by victim/killer name and system. Please note that you may add filters based on <b>day</b>, <b>week</b>, or <b>month</b> regarding the time stamps<br>
+                    <div class="endpoint-controls">
+                        <label for="incident-param-type">Parameter Type:</label>
+                        <select id="incident-param-type" onchange="toggleIncidentInputs()">
+                            <option value="none">None</option>
+                            <option value="name">Name</option>
+                            <option value="system">System</option>
+                            <option value="filter">Filter</option>
+                        </select>
+
+                        <div id="incident-name-div" style="display:none;">
+                            <label for="incident-name-input">Name:</label>
+                            <input type="text" id="incident-name-input" placeholder="Enter name here (string)">
+                        </div>
+
+                        <div id="incident-system-div" style="display:none;">
+                            <label for="incident-system-input">System:</label>
+                            <input type="text" id="incident-system-input" placeholder="Enter system here (string or ID)">
+                        </div>
+
+                        <div id="incident-filter-div" style="display:none;">
+                            <label for="incident-filter-select">Filter:</label>
+                            <select id="incident-filter-select">
+                                <option value="day">day</option>
+                                <option value="week">week</option>
+                                <option value="month">month</option>
+                            </select>
+                        </div>
+                        <button class="generate-button" onclick="generateCurlCommand('/incident', 'incident-param-type', 'incident-name-input', 'incident-system-input', 'incident-filter-select', 'incident-generated-curl', 'incident-output-dynamic')">Generate Incident cURL Command</button>
+                        <pre id="incident-generated-curl"><code>curl -X GET "https://api.alpha-strike.space/incident"</code></pre>
+                        <pre id="incident-output-dynamic"></pre>
+                    </div>
+
+                </p>
+                <p><b>/location</b> return all systems, or by id and name.<br>
+                    <div class="endpoint-controls">
+                        <label for="location-param-type">Parameter Type:</label>
+                        <select id="location-param-type" onchange="toggleLocationInputs()">
+                            <option value="none">None</option>
+                            <option value="system">System</option>
+                        </select>
+
+                        <div id="location-system-div" style="display:none;">
+                            <label for="location-system-input">System:</label>
+                            <input type="text" id="location-system-input" placeholder="Enter system here (string or ID)">
+                        </div>
+                        <button class="generate-button" onclick="generateCurlCommand('/location', 'location-param-type', null, 'location-system-input', null, 'location-generated-curl', 'location-output-dynamic')">Generate Location cURL Command</button>
+                        <pre id="location-generated-curl"><code>curl -X GET "https://api.alpha-strike.space/location"</code></pre>
+                        <pre id="location-output-dynamic"></pre>
+                    </div>
+
                     <b>/totals</b> return all totals, or by victim/killer name and system. Please note that you may add filters based on <b>day</b>, <b>week</b>, or <b>month</b> regarding the time stamps<br>
-		    <pre>
-		    <code>
-			curl -X GET "https://api.alpha-strike.space/totals"
-                    </code>
-		    </pre>
-		    <pre>
-		    <code>
-			library(httr2)
-			# API call in R.
-  			url <- "https://api.alpha-strike.space/totals"
-  			# Start the request from the given URL.
-  			url_request <- httr2::request(url) |>
-    				httr2::req_error(is_error = ~ FALSE)
-  			url_response <- httr2::req_perform(url_request) # Get the response.
-  			# Check for error in HTTP response.
-  			if (httr2::resp_status(url_response) == 200) {
-				url_response$headers$`content-type` <- "application/json"
-    				json_package <- url_response |> httr2::resp_body_json(url_response) # Spit JSON and store.
-    				return(json_package) # Return the JSON variable.
-  			} else {
-    				response_code <- httr2::resp_status(url_response)
-    				response_string <- httr2::resp_status_desc(url_response)
-    				http_frame <- data.frame(code = response_code, description = response_string)
-    				return(http_frame)
-  			}
-		    </code>
-		    </pre>
-		    <pre>
-		    <code>
-			curl -X GET "https://api.alpha-strike.space/totals?name=STRING_HERE"
-                    </code>
-		    </pre>
-		    <pre>
-		    <code>
-			library(httr2)
-			# API call in R.
-  			url <- "https://api.alpha-strike.space/totals?name=STRING_HERE"
-  			# Start the request from the given URL.
-  			url_request <- httr2::request(url) |>
-    				httr2::req_error(is_error = ~ FALSE)
-  			url_response <- httr2::req_perform(url_request) # Get the response.
-  			# Check for error in HTTP response.
-  			if (httr2::resp_status(url_response) == 200) {
-				url_response$headers$`content-type` <- "application/json"
-    				json_package <- url_response |> httr2::resp_body_json(url_response) # Spit JSON and store.
-    				return(json_package) # Return the JSON variable.
-  			} else {
-    				response_code <- httr2::resp_status(url_response)
-    				response_string <- httr2::resp_status_desc(url_response)
-    				http_frame <- data.frame(code = response_code, description = response_string)
-    				return(http_frame)
-  			}
-		    </code>
-		    </pre>
-		    <pre>
-		    <code>
-			curl -X GET "https://api.alpha-strike.space/totals?system=STRING_OR_ID_HERE"
-                    </code>
-		    </pre>
-		    <pre>
-		    <code>
-			library(httr2)
-			# API call in R.
-  			url <- "https://api.alpha-strike.space/totals?system=STRING_OR_ID_HERE"
-  			# Start the request from the given URL.
-  			url_request <- httr2::request(url) |>
-    				httr2::req_error(is_error = ~ FALSE)
-  			url_response <- httr2::req_perform(url_request) # Get the response.
-  			# Check for error in HTTP response.
-  			if (httr2::resp_status(url_response) == 200) {
-				url_response$headers$`content-type` <- "application/json"
-    				json_package <- url_response |> httr2::resp_body_json(url_response) # Spit JSON and store.
-    				return(json_package) # Return the JSON variable.
-  			} else {
-    				response_code <- httr2::resp_status(url_response)
-    				response_string <- httr2::resp_status_desc(url_response)
-    				http_frame <- data.frame(code = response_code, description = response_string)
-    				return(http_frame)
-  			}
-		    </code>
-		    </pre>
-		    <pre>
-		    <code>
-			curl -X GET "https://api.alpha-strike.space/totals?filter=month"
-                    </code>
-		    </pre>
-		    <pre>
-		    <code>
-			library(httr2)
-			# API call in R.
-  			url <- "https://api.alpha-strike.space/totals?filter=month"
-  			# Start the request from the given URL.
-  			url_request <- httr2::request(url) |>
-    				httr2::req_error(is_error = ~ FALSE)
-  			url_response <- httr2::req_perform(url_request) # Get the response.
-  			# Check for error in HTTP response.
-  			if (httr2::resp_status(url_response) == 200) {
-				url_response$headers$`content-type` <- "application/json"
-    				json_package <- url_response |> httr2::resp_body_json(url_response) # Spit JSON and store.
-    				return(json_package) # Return the JSON variable.
-  			} else {
-    				response_code <- httr2::resp_status(url_response)
-    				response_string <- httr2::resp_status_desc(url_response)
-    				http_frame <- data.frame(code = response_code, description = response_string)
-    				return(http_frame)
-  			}
-		    </code>
-		    </pre>
+                    <div class="endpoint-controls">
+                        <label for="totals-param-type">Parameter Type:</label>
+                        <select id="totals-param-type" onchange="toggleTotalsInputs()">
+                            <option value="none">None</option>
+                            <option value="name">Name</option>
+                            <option value="system">System</option>
+                            <option value="filter">Filter</option>
+                        </select>
+
+                        <div id="totals-name-div" style="display:none;">
+                            <label for="totals-name-input">Name:</label>
+                            <input type="text" id="totals-name-input" placeholder="Enter name here (string)">
+                        </div>
+
+                        <div id="totals-system-div" style="display:none;">
+                            <label for="totals-system-input">System:</label>
+                            <input type="text" id="totals-system-input" placeholder="Enter system here (string or ID)">
+                        </div>
+
+                        <div id="totals-filter-div" style="display:none;">
+                            <label for="totals-filter-select">Filter:</label>
+                            <select id="totals-filter-select">
+                                <option value="day">day</option>
+                                <option value="week">week</option>
+                                <option value="month">month</option>
+                            </select>
+                        </div>
+                        <button class="generate-button" onclick="generateCurlCommand('/totals', 'totals-param-type', 'totals-name-input', 'totals-system-input', 'totals-filter-select', 'totals-generated-curl', 'totals-output-dynamic')">Generate Totals cURL Command</button>
+                        <pre id="totals-generated-curl"><code>curl -X GET "https://api.alpha-strike.space/totals"</code></pre>
+                        <pre id="totals-output-dynamic"></pre>
+                    </div>
                 </p>
             </section>
 
             <section class="main-section" id="Websockets">
-                <header>
-                    Websockets
-                </header>
-		<p>
-		    An outbound websocket on the server for latest mails. Remember, the base url is <strong>wss://api.alpha-strike.space/ws/</strong> for your reference. It must be noted that we can't use the previous package in R and must use <a href="https://rstudio.github.io/websocket/">websocket<a> for interaction with the server. You may need the additional dependency <a href="https://cran.r-project.org/web/packages/jsonlite/index.html">jsonlite<a> for parsing information.
-		</p>
-                    <b>/mails</b> return a message, and the latest incident on the frontier.<br>
-		    <pre>
-		    <code>
-			wscat -c "wss://api.alpha-strike.space/ws/mails"
-	            </code>
-		    </pre>
-		    <pre>
-		    <code>
-			library(websocket)
-			library(jsonlite)
-			# WebSocket URL in R
-			url <- "wss://api.alpha-strike.space/ws/mails"
-			# Create WebSocket connection
-			web_socket <- WebSocket$new(url)
-			# Message handling
-			web_socket$onMessage(function(event) {
-  				received_message <- event$data  # Access the received message
-  				print(paste("Received:", received_message))  # Process the message
-  
-  				# Example: Parse JSON if needed
-  				if (grepl("{", received_message)) {
-    				parsed_data <- jsonlite::fromJSON(received_message)
-    				print(parsed_data)
-  			})	
-			# Error handling
-			web_socket$onError(function(err) {
-  				print(paste("Error:", err$message))
-			})
-			# Keep alive
-			Sys.sleep(10) # Adjust time
-			# Close connection
-			web_socket$close()
-		    </code>
-		    </pre>
+                <header>Websockets</header>
+                <p>
+                    An outbound websocket on the server for latest mails. Remember, the base url is <strong>wss://api.alpha-strike.space/ws/</strong> for your reference. It must be noted that websockets aren't serialized in the traditional sense. You will parse it as a string or binary, in our case it will be a string.
                 </p>
+                <b>/mails</b> return a message, and the latest incident on the frontier.<br>
+                <pre id="websocket-wscat">
+                    <code>wscat -c "wss://api.alpha-strike.space/ws/mails"</code>
+                </pre>
+                <pre id="websocket-wscat-explanation" class="llm-explanation-output"></pre>
+
             </section>
 
             <section class="main-section" id="Development">
-                <header>
-                    Development
-                </header>
+                <header>Development</header>
                 <p>
-		    I shamelessly promote this website to host incident mails from the game <a href="https://www.evefrontier.com/en">Eve Frontier<a>. The 		    development of this website is unusual in the sense that most have been written in Python, PHP, or some sort of Java framework. I took 		    a different route by utilizing C++ for handling a PostgreSQL database and HTML for the beautiful display in conjunction with NGINX 		    and Cloudflare for handling requests. You may find my repository that I built by utilizing <a href="https://github.com/kandrsn99/Docker-PostgreSQL-and-Crow-API">Docker, Crow cpp, NGINX, and PostgreSQL<a> and learn more about it. The purpose of this endeavour is to give myself confidence handling data across my two favorite 		    languages, support a website in its display, and learn new things while giving those who play <a href="https://www.evefrontier.com/en">Eve Frontier<a> a place to show off their 		    criminally good pew pew skills. Good luck, have fun o7.
+                    I shamelessly promote our work for developing this website to host incident mails from the game Eve Frontier. The development of this website is unusual in the sense that most have been written in Python, PHP, or some sort of Java framework. I took a different route by utilizing C++ for handling a PostgreSQL database and HTML for the beautiful display in conjunction with NGINX and Cloudflare for handling requests. The purpose of this endeavor is to give myself confidence handling data across my two favorite languages, support a website in its display, and learn new things while giving those who play Eve Frontier a place to show off their criminally good pew pew skills. Good luck, have fun o7.
                 </p>
                 <ul>
-                    <li><a href="https://isocpp.org/std/the-standard">Modern C++ Standards<a>, <a href="https://www.postgresql.org/">PostgreSQL<a></li>
-                    <li><a href="https://pqxx.org/development/libpqxx/#:~:text=Quick%20links:%201.%20Frequently%20Asked%20Questions">libqxx<a>, <a href="https://json.nlohmann.me/">nlohmann/json<a>, <a href="https://crowcpp.org/master/">crow<a></li>
-                    <li><a href="https://www.cloudflare.com/">Cloudflare<a>, <a href="https://nginx.org/en/">NGINX<a></li>
-		    <li><a href="https://discord.gg/dzEc68pw2e">DISCORD<a> for complaints or suggestions.</li>
-		    <li><a href="https://github.com/alpha-strike-space">Main GitHub Organization<a></li>
+                    <li><a href="https://isocpp.org/std/the-standard">Modern C++ Standards</a>, <a href="https://www.postgresql.org/">PostgreSQL</a></li>
+                    <li><a href="https://pqxx.org/development/libpqxx/#:~:text=Quick%20links:%201.%20Frequently%20Asked%20Questions">libqxx</a>, <a href="https://json.nlohmann.me/">nlohmann/json</a>, <a href="https://crowcpp.org/master/">crow</a></li>
+                    <li><a href="https://www.cloudflare.com/">Cloudflare</a>, <a href="https://nginx.org/en/">NGINX</a></li>
+                    <li><a href="https://discord.gg/dzEc68pw2e">DISCORD</a></li>
+                    <li><a href="https://github.com/alpha-strike-space">Main GitHub Organization</a></li>
                 </ul>
             </section>
         </main>
     </div>
 </body>
+<script>
+    const baseUrl = 'https://api.alpha-strike.space'; // Base URL for API calls
+
+    /**
+     * Toggles the visibility of input fields based on the selected parameter type.
+     * @param {string} paramTypeSelectId - ID of the select element for parameter type.
+     * @param {string|null} nameDivId - ID of the div containing the name input.
+     * @param {string|null} systemDivId - ID of the div containing the system input.
+     * @param {string|null} filterDivId - ID of the div containing the filter select.
+     */
+    function toggleInputVisibility(paramTypeSelectId, nameDivId, systemDivId, filterDivId) {
+        // Use optional chaining for safety if elements might not exist for all endpoints
+        const paramType = paramTypeSelectId ? document.getElementById(paramTypeSelectId)?.value : null;
+
+        // Hide all potential input divs first
+        if (nameDivId) document.getElementById(nameDivId).style.display = 'none';
+        if (systemDivId) document.getElementById(systemDivId).style.display = 'none';
+        if (filterDivId) document.getElementById(filterDivId).style.display = 'none';
+
+        // Show the relevant input div based on the selected parameter type
+        if (paramType === 'name' && nameDivId) {
+            document.getElementById(nameDivId).style.display = 'block';
+        } else if (paramType === 'system' && systemDivId) {
+            document.getElementById(systemDivId).style.display = 'block';
+        } else if (paramType === 'filter' && filterDivId) {
+            document.getElementById(filterDivId).style.display = 'block';
+        }
+    }
+
+    // Specific toggling functions for each endpoint's inputs
+    function toggleIncidentInputs() {
+        toggleInputVisibility('incident-param-type', 'incident-name-div', 'incident-system-div', 'incident-filter-div');
+    }
+
+    function toggleLocationInputs() {
+        // Location endpoint only has 'system' parameter, so 'name' and 'filter' divs are null
+        toggleInputVisibility('location-param-type', null, 'location-system-div', null);
+    }
+
+    function toggleTotalsInputs() {
+        toggleInputVisibility('totals-param-type', 'totals-name-div', 'totals-system-div', 'totals-filter-div');
+    }
+
+    /**
+     * Generates and displays a cURL command, then fetches and displays the API response.
+     * Also acts as a toggle to clear output if already displayed.
+     * @param {string} baseEndpoint - The base API endpoint (e.g., '/health', '/incident').
+     * @param {string|null} paramTypeSelectId - ID of the select element for parameter type (null if no params).
+     * @param {string|null} nameInputId - ID of the name input field (null if not applicable).
+     * @param {string|null} systemInputId - ID of the system input field (null if not applicable).
+     * @param {string|null} filterSelectId - ID of the filter select element (null if not applicable).
+     * @param {string} curlOutputId - ID of the <pre> element to display the cURL command.
+     * @param {string} fetchOutputId - ID of the <pre> element to display the API response.
+     */
+    async function generateCurlCommand(baseEndpoint, paramTypeSelectId, nameInputId, systemInputId, filterSelectId, curlOutputId, fetchOutputId) {
+        let endpoint = baseEndpoint;
+        const queryParams = [];
+
+        // Get the output element for the API response
+        const outputElement = document.getElementById(fetchOutputId);
+        // Get the code element for the cURL command
+        const curlCodeElement = document.getElementById(curlOutputId)?.querySelector('code');
+
+        // Toggle functionality: If output is already displayed, clear it and reset cURL command, then return.
+        if (outputElement.textContent.trim() !== '' && outputElement.textContent.trim() !== 'Loading...') {
+            outputElement.textContent = ''; // Clear the API response content
+            if (curlCodeElement) {
+                // Reset cURL command to its default for this endpoint
+                curlCodeElement.textContent = `curl -X GET "${baseUrl}${baseEndpoint}"`;
+            }
+            return; // Exit the function
+        }
+
+        // Construct query parameters if a parameter type selector exists
+        if (paramTypeSelectId) {
+            const paramType = document.getElementById(paramTypeSelectId)?.value;
+
+            if (paramType === 'name' && nameInputId) {
+                const nameValue = document.getElementById(nameInputId).value;
+                if (nameValue) {
+                    queryParams.push(`name=${encodeURIComponent(nameValue)}`);
+                }
+            } else if (paramType === 'system' && systemInputId) {
+                const systemValue = document.getElementById(systemInputId).value;
+                if (systemValue) {
+                    queryParams.push(`system=${encodeURIComponent(systemValue)}`);
+                }
+            } else if (paramType === 'filter' && filterSelectId) {
+                const filterValue = document.getElementById(filterSelectId).value;
+                if (filterValue) {
+                    queryParams.push(`filter=${encodeURIComponent(filterValue)}`);
+                }
+            }
+        }
+
+        // Append query parameters to the endpoint if any exist
+        if (queryParams.length > 0) {
+            endpoint += `?${queryParams.join('&')}`;
+        }
+
+        const fullUrl = `${baseUrl}${endpoint}`;
+
+        // Update the displayed cURL command
+        if (curlCodeElement) {
+            curlCodeElement.textContent = `curl -X GET "${fullUrl}"`;
+        }
+
+        // Display loading message in the output area before fetching
+        outputElement.textContent = 'Loading...';
+
+        try {
+            const response = await fetch(fullUrl);
+            const contentType = response.headers.get('content-type') || '';
+
+            if (contentType.includes('application/json')) {
+                const data = await response.json();
+                outputElement.textContent = JSON.stringify(data, null, 2); // Pretty print JSON
+            } else {
+                const text = await response.text();
+                outputElement.textContent = text;
+            }
+        } catch (err) {
+            outputElement.textContent = `Error: ${err.message}`; // Display specific error message
+        }
+    }
+
+    // This function is for the older, clickable pre elements found in the "Intro" section.
+    // It is kept separate from generateCurlCommand as its purpose is different (direct click to fetch).
+    async function testEndpoint(baseEndpoint, paramName, inputId, outputId) {
+        const output = document.getElementById(outputId);
+
+        // Toggle functionality: If output is already displayed, clear it, then return.
+        if (output.textContent.trim() !== '' && output.textContent.trim() !== 'Loading...') {
+            output.textContent = ''; // Clear the output content
+            return; // Exit the function
+        }
+
+        output.textContent = 'Loading...'; // Show loading message
+
+        let endpoint = baseEndpoint;
+        if (paramName && inputId) {
+            const inputValue = document.getElementById(inputId).value;
+            if (inputValue) {
+                endpoint += `?${paramName}=${encodeURIComponent(inputValue)}`;
+            }
+        }
+
+        try {
+            const response = await fetch(baseUrl + endpoint);
+            const contentType = response.headers.get('content-type') || '';
+            if (contentType.includes('application/json')) {
+                const data = await response.json();
+                output.textContent = JSON.stringify(data, null, 2);
+            } else {
+                const text = await response.text();
+                output.textContent = text;
+            }
+        } catch (err) {
+            output.textContent = `Error: ${err.message}`;
+        }
+    }
+
+    // Initial call to hide inputs on page load when the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        toggleIncidentInputs();
+        toggleLocationInputs();
+        toggleTotalsInputs();
+    });
+</script>
 </html>
