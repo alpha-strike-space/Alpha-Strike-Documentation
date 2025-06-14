@@ -294,7 +294,7 @@
                         <pre id="location-output-dynamic"></pre>
                     </div>
 
-                    <b>/totals</b> return all totals, or by victim/killer name and system. Please note that you may add filters based on <b>day</b>, <b>week</b>, or <b>month</b> regarding the time stamps<br>
+                    <b>/totals</b> return all totals, or by victim/killer name and system. Your default is the top ten based on filtration, otherwise it will return top ten all time. Please note that you may add filters based on <b>day</b>, <b>week</b>, or <b>month</b> regarding the time stamp which are Unix encoded. <br><br>Special requests: <b>/totals?name=&filter=month</b> will return all named players (if none was specified) based on a filter period where <b>/totals?system=&filter=month</b> will return all named systems (if none was specified) based on a filter period. This includes all, not just the top ten.<br>
                     <div class="endpoint-controls">
                         <label for="totals-param-type">Parameter Type:</label>
                         <select id="totals-param-type" onchange="toggleTotalsInputs()">
@@ -341,7 +341,7 @@
             <section class="main-section" id="Development">
                 <header>Development</header>
                 <p>
-                    I shamelessly promote our work for developing this website to host incident mails from the game Eve Frontier. The development of this website is unusual in the sense that most have been written in Python, PHP, or some sort of Java framework. I took a different route by utilizing C++ for handling a PostgreSQL database and HTML for the beautiful display in conjunction with NGINX and Cloudflare for handling requests. The purpose of this endeavor is to give myself confidence handling data across my two favorite languages, support a website in its display, and learn new things while giving those who play Eve Frontier a place to show off their criminally good pew pew skills. Good luck, have fun o7.
+                    We shamelessly promote our work for developing this website to host incident mails from the game Eve Frontier. The development of this website is unusual in the sense that most have been written in Python, PHP, or some sort of Java framework. We took a different route by utilizing C++ for handling a PostgreSQL database and HTML for the beautiful display in conjunction with NGINX and Cloudflare for handling requests. The purpose of this endeavor is to give ourselves confidence handling data across PosgreSQL and C++, support a website in its display, and learn new things while giving those who play Eve Frontier a place to show off their criminally good pew pew skills. Good luck, have fun o7.
                 </p>
                 <ul>
                     <li><a href="https://isocpp.org/std/the-standard">Modern C++ Standards</a>, <a href="https://www.postgresql.org/">PostgreSQL</a></li>
