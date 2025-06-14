@@ -271,7 +271,18 @@
                                 <option value="month">month</option>
                             </select>
                         </div>
-                        <button class="generate-button" onclick="generateCurlCommand('/incident', 'incident-param-type', 'incident-name-input', 'incident-system-input', 'incident-filter-select', 'incident-generated-curl', 'incident-output-dynamic')">Generate Incident cURL Command</button>
+
+    			<!-- Limit and Offset always visible -->
+    			<div id="incident-limit-div">
+        			<label for="incident-limit-input">Limit:</label>
+       				<input type="number" id="incident-limit-input" value="100" min="1" placeholder="Limit">
+    			</div>
+    			<div id="incident-offset-div">
+        			<label for="incident-offset-input">Offset:</label>
+        			<input type="number" id="incident-offset-input" value="0" min="0" placeholder="Offset">
+    			</div>
+
+                        <button class="generate-button" onclick="generateCurlCommand('/incident', 'incident-param-type', 'incident-name-input', 'incident-system-input', 'incident-filter-select', 'incident-limit-input', 'incident-offset-input', 'incident-generated-curl', 'incident-output-dynamic')">Generate Incident cURL Command</button>
                         <pre id="incident-generated-curl"><code>curl -X GET "https://api.alpha-strike.space/incident"</code></pre>
                         <pre id="incident-output-dynamic"></pre>
                     </div>
@@ -355,172 +366,208 @@
     </div>
 </body>
 <script>
-    const baseUrl = 'https://api.alpha-strike.space'; // Base URL for API calls
+const baseUrl = 'https://api.alpha-strike.space'; // Base URL for API calls
 
-    /**
-     * Toggles the visibility of input fields based on the selected parameter type.
-     * @param {string} paramTypeSelectId - ID of the select element for parameter type.
-     * @param {string|null} nameDivId - ID of the div containing the name input.
-     * @param {string|null} systemDivId - ID of the div containing the system input.
-     * @param {string|null} filterDivId - ID of the div containing the filter select.
-     */
-    function toggleInputVisibility(paramTypeSelectId, nameDivId, systemDivId, filterDivId) {
-        // Use optional chaining for safety if elements might not exist for all endpoints
-        const paramType = paramTypeSelectId ? document.getElementById(paramTypeSelectId)?.value : null;
+/**
+ * Toggles the visibility of input fields based on the selected parameter type.
+ * @param {string} paramTypeSelectId - ID of the select element for parameter type.
+ * @param {string|null} nameDivId - ID of the div containing the name input.
+ * @param {string|null} systemDivId - ID of the div containing the system input.
+ * @param {string|null} filterDivId - ID of the div containing the filter select.
+ */
+function toggleInputVisibility(paramTypeSelectId, nameDivId, systemDivId, filterDivId) {
+    const paramType = paramTypeSelectId ? document.getElementById(paramTypeSelectId)?.value : null;
 
-        // Hide all potential input divs first
-        if (nameDivId) document.getElementById(nameDivId).style.display = 'none';
-        if (systemDivId) document.getElementById(systemDivId).style.display = 'none';
-        if (filterDivId) document.getElementById(filterDivId).style.display = 'none';
+    // Hide all potential input divs first
+    if (nameDivId) document.getElementById(nameDivId).style.display = 'none';
+    if (systemDivId) document.getElementById(systemDivId).style.display = 'none';
+    if (filterDivId) document.getElementById(filterDivId).style.display = 'none';
 
-        // Show the relevant input div based on the selected parameter type
-        if (paramType === 'name' && nameDivId) {
-            document.getElementById(nameDivId).style.display = 'block';
-        } else if (paramType === 'system' && systemDivId) {
-            document.getElementById(systemDivId).style.display = 'block';
-        } else if (paramType === 'filter' && filterDivId) {
-            document.getElementById(filterDivId).style.display = 'block';
-        }
+    // Show the relevant input div based on the selected parameter type
+    if (paramType === 'name' && nameDivId) {
+        document.getElementById(nameDivId).style.display = 'block';
+    } else if (paramType === 'system' && systemDivId) {
+        document.getElementById(systemDivId).style.display = 'block';
+    } else if (paramType === 'filter' && filterDivId) {
+        document.getElementById(filterDivId).style.display = 'block';
     }
+}
 
-    // Specific toggling functions for each endpoint's inputs
-    function toggleIncidentInputs() {
-        toggleInputVisibility('incident-param-type', 'incident-name-div', 'incident-system-div', 'incident-filter-div');
-    }
+// Specific toggling functions for each endpoint's inputs
+function toggleIncidentInputs() {
+    toggleInputVisibility('incident-param-type', 'incident-name-div', 'incident-system-div', 'incident-filter-div');
+}
 
-    function toggleLocationInputs() {
-        // Location endpoint only has 'system' parameter, so 'name' and 'filter' divs are null
-        toggleInputVisibility('location-param-type', null, 'location-system-div', null);
-    }
+function toggleLocationInputs() {
+    // Location endpoint only has 'system' parameter, so 'name' and 'filter' divs are null
+    toggleInputVisibility('location-param-type', null, 'location-system-div', null);
+}
 
-    function toggleTotalsInputs() {
-        toggleInputVisibility('totals-param-type', 'totals-name-div', 'totals-system-div', 'totals-filter-div');
-    }
+function toggleTotalsInputs() {
+    toggleInputVisibility('totals-param-type', 'totals-name-div', 'totals-system-div', 'totals-filter-div');
+}
 
-    /**
-     * Generates and displays a cURL command, then fetches and displays the API response.
-     * Also acts as a toggle to clear output if already displayed.
-     * @param {string} baseEndpoint - The base API endpoint (e.g., '/health', '/incident').
-     * @param {string|null} paramTypeSelectId - ID of the select element for parameter type (null if no params).
-     * @param {string|null} nameInputId - ID of the name input field (null if not applicable).
-     * @param {string|null} systemInputId - ID of the system input field (null if not applicable).
-     * @param {string|null} filterSelectId - ID of the filter select element (null if not applicable).
-     * @param {string} curlOutputId - ID of the <pre> element to display the cURL command.
-     * @param {string} fetchOutputId - ID of the <pre> element to display the API response.
-     */
-    async function generateCurlCommand(baseEndpoint, paramTypeSelectId, nameInputId, systemInputId, filterSelectId, curlOutputId, fetchOutputId) {
-        let endpoint = baseEndpoint;
-        const queryParams = [];
+/**
+ * Always returns limit and offset query parameters for all endpoints.
+ * @param {string} limitInputId - ID of the limit input field.
+ * @param {string} offsetInputId - ID of the offset input field.
+ * @returns {string[]} - Array with limit and offset query strings.
+ */
+function getLimitOffsetParams(limitInputId, offsetInputId) {
+    const params = [];
+    const limitElem = document.getElementById(limitInputId);
+    const offsetElem = document.getElementById(offsetInputId);
+    let limit = limitElem ? limitElem.value : '';
+    let offset = offsetElem ? offsetElem.value : '';
 
-        // Get the output element for the API response
-        const outputElement = document.getElementById(fetchOutputId);
-        // Get the code element for the cURL command
-        const curlCodeElement = document.getElementById(curlOutputId)?.querySelector('code');
+    // Provide defaults if empty or invalid
+    if (!limit || isNaN(limit) || parseInt(limit) < 1) limit = '10';
+    if (!offset || isNaN(offset) || parseInt(offset) < 0) offset = '0';
 
-        // Toggle functionality: If output is already displayed, clear it and reset cURL command, then return.
-        if (outputElement.textContent.trim() !== '' && outputElement.textContent.trim() !== 'Loading...') {
-            outputElement.textContent = ''; // Clear the API response content
-            if (curlCodeElement) {
-                // Reset cURL command to its default for this endpoint
-                curlCodeElement.textContent = `curl -X GET "${baseUrl}${baseEndpoint}"`;
-            }
-            return; // Exit the function
-        }
+    params.push(`limit=${encodeURIComponent(limit)}`);
+    params.push(`offset=${encodeURIComponent(offset)}`);
+    return params;
+}
 
-        // Construct query parameters if a parameter type selector exists
-        if (paramTypeSelectId) {
-            const paramType = document.getElementById(paramTypeSelectId)?.value;
+/**
+ * Generates and displays a cURL command, then fetches and displays the API response.
+ * Also acts as a toggle to clear output if already displayed.
+ * @param {string} baseEndpoint - The base API endpoint (e.g., '/health', '/incident').
+ * @param {string|null} paramTypeSelectId - ID of the select element for parameter type (null if no params).
+ * @param {string|null} nameInputId - ID of the name input field (null if not applicable).
+ * @param {string|null} systemInputId - ID of the system input field (null if not applicable).
+ * @param {string|null} filterSelectId - ID of the filter select element (null if not applicable).
+ * @param {string} limitInputId - ID of the limit input field.
+ * @param {string} offsetInputId - ID of the offset input field.
+ * @param {string} curlOutputId - ID of the <pre> element to display the cURL command.
+ * @param {string} fetchOutputId - ID of the <pre> element to display the API response.
+ */
+async function generateCurlCommand(
+    baseEndpoint,
+    paramTypeSelectId,
+    nameInputId,
+    systemInputId,
+    filterSelectId,
+    limitInputId,
+    offsetInputId,
+    curlOutputId,
+    fetchOutputId
+) {
+    let endpoint = baseEndpoint;
+    const queryParams = [];
 
-            if (paramType === 'name' && nameInputId) {
-                const nameValue = document.getElementById(nameInputId).value;
-                if (nameValue) {
-                    queryParams.push(`name=${encodeURIComponent(nameValue)}`);
-                }
-            } else if (paramType === 'system' && systemInputId) {
-                const systemValue = document.getElementById(systemInputId).value;
-                if (systemValue) {
-                    queryParams.push(`system=${encodeURIComponent(systemValue)}`);
-                }
-            } else if (paramType === 'filter' && filterSelectId) {
-                const filterValue = document.getElementById(filterSelectId).value;
-                if (filterValue) {
-                    queryParams.push(`filter=${encodeURIComponent(filterValue)}`);
-                }
-            }
-        }
+    // Get the output element for the API response
+    const outputElement = document.getElementById(fetchOutputId);
+    // Get the code element for the cURL command
+    const curlCodeElement = document.getElementById(curlOutputId)?.querySelector('code');
 
-        // Append query parameters to the endpoint if any exist
-        if (queryParams.length > 0) {
-            endpoint += `?${queryParams.join('&')}`;
-        }
-
-        const fullUrl = `${baseUrl}${endpoint}`;
-
-        // Update the displayed cURL command
+    // Toggle functionality: If output is already displayed, clear it and reset cURL command, then return.
+    if (outputElement.textContent.trim() !== '' && outputElement.textContent.trim() !== 'Loading...') {
+        outputElement.textContent = ''; // Clear the API response content
         if (curlCodeElement) {
-            curlCodeElement.textContent = `curl -X GET "${fullUrl}"`;
+            // Reset cURL command to its default for this endpoint, with default limit/offset
+            curlCodeElement.textContent = `curl -X GET "${baseUrl}${baseEndpoint}?limit=10&offset=0"`;
         }
+        return; // Exit the function
+    }
 
-        // Display loading message in the output area before fetching
-        outputElement.textContent = 'Loading...';
+    // Construct query parameters if a parameter type selector exists
+    if (paramTypeSelectId) {
+        const paramType = document.getElementById(paramTypeSelectId)?.value;
 
-        try {
-            const response = await fetch(fullUrl);
-            const contentType = response.headers.get('content-type') || '';
-
-            if (contentType.includes('application/json')) {
-                const data = await response.json();
-                outputElement.textContent = JSON.stringify(data, null, 2); // Pretty print JSON
-            } else {
-                const text = await response.text();
-                outputElement.textContent = text;
+        if (paramType === 'name' && nameInputId) {
+            const nameValue = document.getElementById(nameInputId).value;
+            if (nameValue) {
+                queryParams.push(`name=${encodeURIComponent(nameValue)}`);
             }
-        } catch (err) {
-            outputElement.textContent = `Error: ${err.message}`; // Display specific error message
+        } else if (paramType === 'system' && systemInputId) {
+            const systemValue = document.getElementById(systemInputId).value;
+            if (systemValue) {
+                queryParams.push(`system=${encodeURIComponent(systemValue)}`);
+            }
+        } else if (paramType === 'filter' && filterSelectId) {
+            const filterValue = document.getElementById(filterSelectId).value;
+            if (filterValue) {
+                queryParams.push(`filter=${encodeURIComponent(filterValue)}`);
+            }
         }
     }
 
-    // This function is for the older, clickable pre elements found in the "Intro" section.
-    // It is kept separate from generateCurlCommand as its purpose is different (direct click to fetch).
-    async function testEndpoint(baseEndpoint, paramName, inputId, outputId) {
-        const output = document.getElementById(outputId);
+    // Always add limit and offset parameters
+    queryParams.push(...getLimitOffsetParams(limitInputId, offsetInputId));
 
-        // Toggle functionality: If output is already displayed, clear it, then return.
-        if (output.textContent.trim() !== '' && output.textContent.trim() !== 'Loading...') {
-            output.textContent = ''; // Clear the output content
-            return; // Exit the function
+    // Append query parameters to the endpoint if any exist
+    if (queryParams.length > 0) {
+        endpoint += `?${queryParams.join('&')}`;
+    }
+
+    const fullUrl = `${baseUrl}${endpoint}`;
+
+    // Update the displayed cURL command
+    if (curlCodeElement) {
+        curlCodeElement.textContent = `curl -X GET "${fullUrl}"`;
+    }
+
+    // Display loading message in the output area before fetching
+    outputElement.textContent = 'Loading...';
+
+    try {
+        const response = await fetch(fullUrl);
+        const contentType = response.headers.get('content-type') || '';
+
+        if (contentType.includes('application/json')) {
+            const data = await response.json();
+            outputElement.textContent = JSON.stringify(data, null, 2); // Pretty print JSON
+        } else {
+            const text = await response.text();
+            outputElement.textContent = text;
         }
+    } catch (err) {
+        outputElement.textContent = `Error: ${err.message}`; // Display specific error message
+    }
+}
 
-        output.textContent = 'Loading...'; // Show loading message
+// This function is for the older, clickable pre elements found in the "Intro" section.
+// It is kept separate from generateCurlCommand as its purpose is different (direct click to fetch).
+async function testEndpoint(baseEndpoint, paramName, inputId, outputId) {
+    const output = document.getElementById(outputId);
 
-        let endpoint = baseEndpoint;
-        if (paramName && inputId) {
-            const inputValue = document.getElementById(inputId).value;
-            if (inputValue) {
-                endpoint += `?${paramName}=${encodeURIComponent(inputValue)}`;
-            }
-        }
+    // Toggle functionality: If output is already displayed, clear it, then return.
+    if (output.textContent.trim() !== '' && output.textContent.trim() !== 'Loading...') {
+        output.textContent = ''; // Clear the output content
+        return; // Exit the function
+    }
 
-        try {
-            const response = await fetch(baseUrl + endpoint);
-            const contentType = response.headers.get('content-type') || '';
-            if (contentType.includes('application/json')) {
-                const data = await response.json();
-                output.textContent = JSON.stringify(data, null, 2);
-            } else {
-                const text = await response.text();
-                output.textContent = text;
-            }
-        } catch (err) {
-            output.textContent = `Error: ${err.message}`;
+    output.textContent = 'Loading...'; // Show loading message
+
+    let endpoint = baseEndpoint;
+    if (paramName && inputId) {
+        const inputValue = document.getElementById(inputId).value;
+        if (inputValue) {
+            endpoint += `?${paramName}=${encodeURIComponent(inputValue)}`;
         }
     }
 
-    // Initial call to hide inputs on page load when the DOM is fully loaded
-    document.addEventListener('DOMContentLoaded', () => {
-        toggleIncidentInputs();
-        toggleLocationInputs();
-        toggleTotalsInputs();
-    });
+    try {
+        const response = await fetch(baseUrl + endpoint);
+        const contentType = response.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+            const data = await response.json();
+            output.textContent = JSON.stringify(data, null, 2);
+        } else {
+            const text = await response.text();
+            output.textContent = text;
+        }
+    } catch (err) {
+        output.textContent = `Error: ${err.message}`;
+    }
+}
+
+// Initial call to hide inputs on page load when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    toggleIncidentInputs();
+    toggleLocationInputs();
+    toggleTotalsInputs();
+});
 </script>
 </html>
