@@ -18,7 +18,6 @@
             border-radius: 8px;
             overflow: hidden;
         }
-
         /* Navigation Bar */
         #navbar {
             width: 200px;
@@ -27,7 +26,6 @@
             box-sizing: border-box;
             flex-shrink: 0;
         }
-
         #navbar header {
             font-size: 1.5em;
             margin-bottom: 20px;
@@ -35,7 +33,6 @@
             font-weight: bold;
             color: #333;
         }
-
         /* Navigation Link Specifics */
         .nav-link {
             display: block;
@@ -47,17 +44,14 @@
             border-radius: 6px;
             text-align: left;
         }
-
         .nav-link:last-of-type {
             border-bottom: none;
         }
-
         .nav-link:hover {
             background-color: #e9e9e9;
             color: #000;
             text-decoration: none;
         }
-
         /* Main Documentation Content Area */
         #main-doc {
             flex-grow: 1;
@@ -65,13 +59,11 @@
             box-sizing: border-box;
             background-color: #fff;
         }
-
         /* Text and List Styling */
         p, ul {
             line-height: 1.6;
             margin-bottom: 1em;
         }
-
         /* Section Headers */
         .main-section header {
             font-size: 2em;
@@ -79,7 +71,14 @@
             border-bottom: 1px solid #ccc;
             padding-bottom: 10px;
         }
-
+        .main-section h3 {
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            color: #333;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
         /* Inline Code Elements */
         code {
             background-color: #f0f0f0;
@@ -89,7 +88,6 @@
             font-size: 0.95em;
             white-space: nowrap;
         }
-
         /* Preformatted and Code Blocks */
         pre, pre code {
             text-align: left !important;
@@ -103,9 +101,8 @@
             padding-left: 0; /* Align pre text to the very left */
             margin-left: 0; /* Remove any left margin */
         }
-
         /* Input Fields and Select Dropdowns */
-        input[type="text"], select {
+        input[type="text"], input[type="number"], select {
             padding: 8px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
@@ -114,7 +111,6 @@
             box-sizing: border-box;
             font-size: 0.9em;
         }
-
         /* Labels for Inputs */
         label {
             display: block;
@@ -122,7 +118,6 @@
             font-weight: bold;
             color: #555;
         }
-
         /* Generate Button */
         .generate-button {
             background-color: #007bff;
@@ -134,12 +129,31 @@
             font-size: 1em;
             margin-top: 10px;
             margin-bottom: 20px;
+            transition: background-color 0.3s ease;
         }
-
         .generate-button:hover {
             background-color: #0056b3;
         }
-
+        /* Endpoint Controls */
+        .endpoint-controls {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #007bff;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .hidden {
+            display: none;
+        }
+        .parameter-input {
+            display: none;
+        }
+        .parameter-input.show {
+            display: block;
+        }
         /* Responsive Adjustments */
         @media (max-width: 768px) {
             .main-body {
@@ -148,29 +162,24 @@
                 margin: 0;
                 border-radius: 0;
             }
-
             #navbar {
                 width: 100%;
                 padding: 10px;
                 border-right: none;
                 border-bottom: 1px solid #e0e0e0;
             }
-
             #navbar header {
                 margin-bottom: 10px;
             }
-
             .nav-link {
                 border-bottom: none;
             }
-
             #main-doc {
                 padding: 15px;
             }
         }
     </style>
 </head>
-
 <body>
     <div class="main-body">
         <nav id="navbar">
@@ -180,70 +189,49 @@
             <a href="#Websockets" class="nav-link">Websockets</a>
             <a href="#Development" class="nav-link">Development</a>
         </nav>
-
         <main id="main-doc">
             <section class="main-section" id="Intro">
-                <header>What is an Application Programmer Interface (API)?</header>
+                <header>What is an Application Programming Interface (API)?</header>
                 <p>
-                    In principle, an API is a way to define endpoints of data on a server which a client may access over Hyper Text Transfer Protocols (<strong>HTTP</strong>) that we will use.
-                    Many of the most common HTTP methods we see today are <strong>GET</strong>, <strong>POST</strong>, and <strong>DELETE</strong>.
+                    An API is a way to access data from a server using HTTP protocols. The Alpha-Strike API provides endpoints to retrieve Eve Frontier incident data, player statistics, and system information.
                 </p>
-                <p>
-                    Generally, a client will start a request and response handshake with the server via the server API. A process is started
-                    which may be a request or anything that shall trigger an external event for the API.
-                </p>
-                <p>
-                    A server on which the API is running will handle that handshake event. The event may involve authentication, validation, retrieval,
-                    deletion, updating, or manipulation of a data set.
-                </p>
+                <h3>Key Concepts</h3>
                 <ul>
-                    <li>Endpoints are stand-alone user resource link (URL) to provide specific access to a resource or dataset.</li>
-                    <li>Methods indicates the operation called by the client to the API to perform an action.</li>
-                    <li>Parameters are a variable passed to the endpoint for instruction.</li>
-                    <li>Request header is a value representing details about request process, i.e. formatting of datasets or credentials.</li>
-                    <li>Body is the center piece for request and response handshake messaging. It contains the datasets of the resource or status codes.</li>
-                    <li>Response header is much like a request header, but for information about server response.</li>
-                </ul>
-                <p>
-                    It is important to note the concept of web applications today run mainly on HTTP.
-                    Moreover, HTTP protocols began in the early 1960's with the Xanadu project
-                    by Ted Nelson and his team. HTTP was further developed and standardized
-                    by a team at the European Center for Nuclear Research (CERN) by Tim Burners-Lee
-                    to promote his World Wide Web Project (WWW) in the early 1990s with his Hyper Text Markup Language
-                    (HTML) to make information available. You may read more about HTTP standards on their website for specifications and documentation.
-                </p>
-                <p>
-                    Regardless, we saw further development of our ability to interact with clients and servers around the mid-1990s
-                    from Daniel Stenberg with his cURL library. Written in the C-language, it is the foundation
-                    with which most of us interact with APIs across the WWW and you will find his library on just about any computer. Let us look at a basic example in your terminal by running the following: <code>curl -X GET "https://api.alpha-strike.space/health"</code>
-                </p>
-                <p>
-                    As long as the server is running, you should receive a status code of 200 which represents that everything is 'OKAY' so to speak. <br>
-                    You will see many status codes, whether interacting with an API or just loading a URL. The most important codes are the following:
-                </p>
+                    <li><strong>Endpoints</strong> - URLs that provide access to specific resources or datasets</li>
+                    <li><strong>Methods</strong> - HTTP operations (GET, POST, DELETE) that specify the action to perform</li>
+                    <li><strong>Parameters</strong> - Variables passed to endpoints for filtering or configuration</li>
+                    <li><strong>Headers</strong> - Metadata about the request/response (authentication, content type)</li>
+                    <li><strong>Body</strong> - The main content of requests and responses containing data or status information</li>
+				</ul>
+                <h3>HTTP Status Codes</h3>
                 <ul>
-                    <li>Code: 100 means progress.</li>
-                    <li>Code: 200 means success.</li>
-                    <li>Code: 300 means redirection, sometimes cache (temporary storage) rules.</li>
-                    <li>Code: 400 means client side error.</li>
-                    <li>Code: 500 means server side error.</li>
+                    <li><strong>200s</strong> - Success</li>
+                    <li><strong>300s</strong> - Redirection</li>
+                    <li><strong>400s</strong> - Client errors (bad request, not found, etc.)</li>
+                    <li><strong>500s</strong> - Server errors</li>
                 </ul>
-            </section>
 
+                <h3>Base URL</h3>
+                <p>All API endpoints use the base URL: <code>https://api.alpha-strike.space/</code></p>
+                
+                <h3>Quick Test</h3>
+                <p>Test the API health endpoint:</p>
+                <pre><code>curl -X GET "https://api.alpha-strike.space/health"</code></pre>
+            </section>
             <section class="main-section" id="Endpoints">
-                <header>Endpoints</header>
+                <header>API Endpoints</header>
                 <p>
-                    We shall list each endpoint and the corresponding command to retrieve information with our basis library cURL. Keep in mind our base url is <strong>https://api.alpha-strike.space/</strong> for your reference. Note, that you may hide output by hitting the generate button again.
+                    Interactive endpoint testing with live API calls. Click any "Generate cURL Command" button to test the endpoint and see real results.
                 </p>
-                <p><b>/health</b> return the health of server. Example: <code>curl -X GET "https://api.alpha-strike.space/health"</code><br>
-                    <div class="endpoint-controls">
-                        <button class="generate-button" onclick="generateCurlCommand('/health', null, null, null, null, 'health-generated-curl', 'health-output-dynamic')">Generate Health cURL Command</button>
-                        <pre id="health-generated-curl"><code>curl -X GET "https://api.alpha-strike.space/health"</code></pre>
-                        <pre id="health-output-dynamic"></pre>
-                    </div>
-                </p>
-                <p><b>/incident</b> return all incidents, or by victim/killer name and system. Please note that you may add filters based on <b>day</b>, <b>week</b>, or <b>month</b> regarding the time stamps<br>
-                    <div class="endpoint-controls">
+                <p><strong>/health</strong> - Returns the server health status.</p>
+                <div class="endpoint-controls">
+                    <button class="generate-button" onclick="generateCurlCommand('/health', null, null, null, null, null, null, 'health-generated-curl', 'health-output-dynamic')">Test Health Endpoint</button>
+                    <pre id="health-generated-curl"><code>curl -X GET "https://api.alpha-strike.space/health"</code></pre>
+                    <pre id="health-output-dynamic"></pre>
+                </div>
+                <p><strong>/incident</strong> - Returns all incidents, or filtered by victim/killer name, system, or time period.</p>
+                <div class="endpoint-controls">
+                    <div class="input-group">
                         <label for="incident-param-type">Parameter Type:</label>
                         <select id="incident-param-type" onchange="toggleIncidentInputs()">
                             <option value="none">None</option>
@@ -251,61 +239,55 @@
                             <option value="system">System</option>
                             <option value="filter">Filter</option>
                         </select>
-
-                        <div id="incident-name-div" style="display:none;">
-                            <label for="incident-name-input">Name:</label>
-                            <input type="text" id="incident-name-input" placeholder="Enter name here (string)">
-                        </div>
-
-                        <div id="incident-system-div" style="display:none;">
-                            <label for="incident-system-input">System:</label>
-                            <input type="text" id="incident-system-input" placeholder="Enter system here (string or ID)">
-                        </div>
-
-                        <div id="incident-filter-div" style="display:none;">
-                            <label for="incident-filter-select">Filter:</label>
-                            <select id="incident-filter-select">
-                                <option value="day">day</option>
-                                <option value="week">week</option>
-                                <option value="month">month</option>
-                            </select>
-                        </div>
-
-    			<!-- Limit and Offset always visible -->
-    			<div id="incident-limit-div">
-        			<label for="incident-limit-input">Limit:</label>
-       				<input type="number" id="incident-limit-input" value="100" min="1" placeholder="Limit">
-    			</div>
-    			<div id="incident-offset-div">
-        			<label for="incident-offset-input">Offset:</label>
-        			<input type="number" id="incident-offset-input" value="0" min="0" placeholder="Offset">
-    			</div>
-
-                        <button class="generate-button" onclick="generateCurlCommand('/incident', 'incident-param-type', 'incident-name-input', 'incident-system-input', 'incident-filter-select', 'incident-limit-input', 'incident-offset-input', 'incident-generated-curl', 'incident-output-dynamic')">Generate Incident cURL Command</button>
-                        <pre id="incident-generated-curl"><code>curl -X GET "https://api.alpha-strike.space/incident"</code></pre>
-                        <pre id="incident-output-dynamic"></pre>
                     </div>
-
-                </p>
-                <p><b>/location</b> return all systems, or by id and name.<br>
-                    <div class="endpoint-controls">
+                    <div id="incident-name-div" class="parameter-input">
+                        <label for="incident-name-input">Name:</label>
+                        <input type="text" id="incident-name-input" placeholder="Enter player name">
+                    </div>
+                    <div id="incident-system-div" class="parameter-input">
+                        <label for="incident-system-input">System:</label>
+                        <input type="text" id="incident-system-input" placeholder="Enter system name or ID">
+                    </div>
+                    <div id="incident-filter-div" class="parameter-input">
+                        <label for="incident-filter-select">Time Filter:</label>
+                        <select id="incident-filter-select">
+                            <option value="day">Last Day</option>
+                            <option value="week">Last Week</option>
+                            <option value="month">Last Month</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="incident-limit-input">Limit:</label>
+                        <input type="number" id="incident-limit-input" value="100" min="1" max="1000" placeholder="Results limit">
+                    </div>
+                    <div class="input-group">
+                        <label for="incident-offset-input">Offset:</label>
+                        <input type="number" id="incident-offset-input" value="0" min="0" placeholder="Results offset">
+                    </div>
+                    <button class="generate-button" onclick="generateCurlCommand('/incident', 'incident-param-type', 'incident-name-input', 'incident-system-input', 'incident-filter-select', 'incident-limit-input', 'incident-offset-input', 'incident-generated-curl', 'incident-output-dynamic')">Generate cURL Command</button>
+                    <pre id="incident-generated-curl"><code>curl -X GET "https://api.alpha-strike.space/incident"</code></pre>
+                    <pre id="incident-output-dynamic"></pre>
+                </div>
+                <p><strong>/location</strong> - Returns all systems or specific system information by ID or name.</p>
+                <div class="endpoint-controls">
+                    <div class="input-group">
                         <label for="location-param-type">Parameter Type:</label>
                         <select id="location-param-type" onchange="toggleLocationInputs()">
                             <option value="none">None</option>
                             <option value="system">System</option>
                         </select>
-
-                        <div id="location-system-div" style="display:none;">
-                            <label for="location-system-input">System:</label>
-                            <input type="text" id="location-system-input" placeholder="Enter system here (string or ID)">
-                        </div>
-                        <button class="generate-button" onclick="generateCurlCommand('/location', 'location-param-type', null, 'location-system-input', null, 'location-generated-curl', 'location-output-dynamic')">Generate Location cURL Command</button>
-                        <pre id="location-generated-curl"><code>curl -X GET "https://api.alpha-strike.space/location"</code></pre>
-                        <pre id="location-output-dynamic"></pre>
                     </div>
-
-                    <b>/totals</b> return all totals, or by victim/killer name and system. Your default is the top ten based on filtration, otherwise it will return top ten all time. Please note that you may add filters based on <b>day</b>, <b>week</b>, or <b>month</b> regarding the time stamp which are Unix encoded. <br><br>Special requests: <b>/totals?name=&filter=month</b> will return all named players (if none was specified) based on a filter period where <b>/totals?system=&filter=month</b> will return all named systems (if none was specified) based on a filter period. This includes all, not just the top ten.<br>
-                    <div class="endpoint-controls">
+                    <div id="location-system-div" class="parameter-input">
+                        <label for="location-system-input">System:</label>
+                        <input type="text" id="location-system-input" placeholder="Enter system name or ID">
+                    </div>
+                    <button class="generate-button" onclick="generateCurlCommand('/location', 'location-param-type', null, 'location-system-input', null, null, null, 'location-generated-curl', 'location-output-dynamic')">Generate cURL Command</button>
+                    <pre id="location-generated-curl"><code>curl -X GET "https://api.alpha-strike.space/location"</code></pre>
+                    <pre id="location-output-dynamic"></pre>
+                </div>
+                <p><strong>/totals</strong> - Returns player or system statistics, with optional filtering by time period. Default returns top 10 results.</p>
+                <div class="endpoint-controls">
+                    <div class="input-group">
                         <label for="totals-param-type">Parameter Type:</label>
                         <select id="totals-param-type" onchange="toggleTotalsInputs()">
                             <option value="none">None</option>
@@ -313,41 +295,39 @@
                             <option value="system">System</option>
                             <option value="filter">Filter</option>
                         </select>
-
-                        <div id="totals-name-div" style="display:none;">
-                            <label for="totals-name-input">Name:</label>
-                            <input type="text" id="totals-name-input" placeholder="Enter name here (string)">
-                        </div>
-
-                        <div id="totals-system-div" style="display:none;">
-                            <label for="totals-system-input">System:</label>
-                            <input type="text" id="totals-system-input" placeholder="Enter system here (string or ID)">
-                        </div>
-
-                        <div id="totals-filter-div" style="display:none;">
-                            <label for="totals-filter-select">Filter:</label>
-                            <select id="totals-filter-select">
-                                <option value="day">day</option>
-                                <option value="week">week</option>
-                                <option value="month">month</option>
-                            </select>
-                        </div>
-                        <button class="generate-button" onclick="generateCurlCommand('/totals', 'totals-param-type', 'totals-name-input', 'totals-system-input', 'totals-filter-select', 'totals-generated-curl', 'totals-output-dynamic')">Generate Totals cURL Command</button>
-                        <pre id="totals-generated-curl"><code>curl -X GET "https://api.alpha-strike.space/totals"</code></pre>
-                        <pre id="totals-output-dynamic"></pre>
                     </div>
-                </p>
+                    <div id="totals-name-div" class="parameter-input">
+                        <label for="totals-name-input">Player Name:</label>
+                        <input type="text" id="totals-name-input" placeholder="Enter player name">
+                    </div>
+                    <div id="totals-system-div" class="parameter-input">
+                        <label for="totals-system-input">System:</label>
+                        <input type="text" id="totals-system-input" placeholder="Enter system name or ID">
+                    </div>
+                    <div id="totals-filter-div" class="parameter-input">
+                        <label for="totals-filter-select">Time Filter:</label>
+                        <select id="totals-filter-select">
+                            <option value="day">Last Day</option>
+                            <option value="week">Last Week</option>
+                            <option value="month">Last Month</option>
+                        </select>
+                    </div>
+                    <button class="generate-button" onclick="generateCurlCommand('/totals', 'totals-param-type', 'totals-name-input', 'totals-system-input', 'totals-filter-select', null, null, 'totals-generated-curl', 'totals-output-dynamic')">Generate cURL Command</button>
+                    <pre id="totals-generated-curl"><code>curl -X GET "https://api.alpha-strike.space/totals"</code></pre>
+                    <pre id="totals-output-dynamic"></pre>
+                </div>
             </section>
-
             <section class="main-section" id="Websockets">
-                <header>Websockets</header>
+                <header>WebSocket Endpoints</header>
                 <p>
-                    An outbound websocket on the server for latest mails. Remember, the base url is <strong>wss://api.alpha-strike.space/ws/</strong> for your reference. It must be noted that websockets aren't serialized in the traditional sense. You will parse it as a string or binary, in our case it will be a string.
+                    Real-time websocket connections for live data updates. The base URL is <strong>wss://api.alpha-strike.space/ws/</strong>
                 </p>
-                <b>/mails</b> return a message, and the latest incident on the frontier.<br>
-		        <pre id="websocket-wscat"><code>wscat -c "wss://api.alpha-strike.space/ws/mails"</code></pre>
+                <p><strong>/mails</strong> - Streams real-time incident notifications and latest frontier activity.</p>
+                <div class="endpoint-controls">
+                    <pre id="websocket-wscat"><code>wscat -c "wss://api.alpha-strike.space/ws/mails"</code></pre>
+                    <p><em>Note: WebSocket connections provide real-time data streams and should be handled differently than HTTP requests.</em></p>
+                </div>
             </section>
-
             <section class="main-section" id="Development">
                 <header>Development</header>
                 <p>
@@ -366,81 +346,51 @@
 </body>
 <script>
 const baseUrl = 'https://api.alpha-strike.space'; // Base URL for API calls
-
-/**
- * Toggles the visibility of input fields based on the selected parameter type.
- * @param {string} paramTypeSelectId - ID of the select element for parameter type.
- * @param {string|null} nameDivId - ID of the div containing the name input.
- * @param {string|null} systemDivId - ID of the div containing the system input.
- * @param {string|null} filterDivId - ID of the div containing the filter select.
- */
+// Toggles the visibility of parameter input fields based on selection.
 function toggleInputVisibility(paramTypeSelectId, nameDivId, systemDivId, filterDivId) {
-    const paramType = paramTypeSelectId ? document.getElementById(paramTypeSelectId)?.value : null;
-
-    // Hide all potential input divs first
-    if (nameDivId) document.getElementById(nameDivId).style.display = 'none';
-    if (systemDivId) document.getElementById(systemDivId).style.display = 'none';
-    if (filterDivId) document.getElementById(filterDivId).style.display = 'none';
-
-    // Show the relevant input div based on the selected parameter type
-    if (paramType === 'name' && nameDivId) {
-        document.getElementById(nameDivId).style.display = 'block';
-    } else if (paramType === 'system' && systemDivId) {
-        document.getElementById(systemDivId).style.display = 'block';
-    } else if (paramType === 'filter' && filterDivId) {
-        document.getElementById(filterDivId).style.display = 'block';
+    const paramType = document.getElementById(paramTypeSelectId)?.value;
+    // Hide all parameter inputs
+    [nameDivId, systemDivId, filterDivId].forEach(divId => {
+        if (divId) {
+            const element = document.getElementById(divId);
+            if (element) element.classList.remove('show');
+        }
+    });
+    // Show the relevant input based on selection
+    const targetDiv = {
+        'name': nameDivId,
+        'system': systemDivId,
+        'filter': filterDivId
+    }[paramType];
+    if (targetDiv) {
+        const element = document.getElementById(targetDiv);
+        if (element) element.classList.add('show');
     }
 }
-
-// Specific toggling functions for each endpoint's inputs
+// Endpoint-specific toggle functions
 function toggleIncidentInputs() {
     toggleInputVisibility('incident-param-type', 'incident-name-div', 'incident-system-div', 'incident-filter-div');
 }
-
+// Toggle locations
 function toggleLocationInputs() {
-    // Location endpoint only has 'system' parameter, so 'name' and 'filter' divs are null
     toggleInputVisibility('location-param-type', null, 'location-system-div', null);
 }
-
+// Toggle totals
 function toggleTotalsInputs() {
     toggleInputVisibility('totals-param-type', 'totals-name-div', 'totals-system-div', 'totals-filter-div');
 }
-
-/**
- * Always returns limit and offset query parameters for all endpoints.
- * @param {string} limitInputId - ID of the limit input field.
- * @param {string} offsetInputId - ID of the offset input field.
- * @returns {string[]} - Array with limit and offset query strings.
- */
+// Gets limit and offset parameters with defaults.
 function getLimitOffsetParams(limitInputId, offsetInputId) {
-    const params = [];
-    const limitElem = document.getElementById(limitInputId);
-    const offsetElem = document.getElementById(offsetInputId);
-    let limit = limitElem ? limitElem.value : '';
-    let offset = offsetElem ? offsetElem.value : '';
-
-    // Provide defaults if empty or invalid
-    if (!limit || isNaN(limit) || parseInt(limit) < 1) limit = '10';
-    if (!offset || isNaN(offset) || parseInt(offset) < 0) offset = '0';
-
-    params.push(`limit=${encodeURIComponent(limit)}`);
-    params.push(`offset=${encodeURIComponent(offset)}`);
-    return params;
+    const limitElem = limitInputId ? document.getElementById(limitInputId) : null;
+    const offsetElem = offsetInputId ? document.getElementById(offsetInputId) : null;
+    const limit = limitElem?.value || '10';
+    const offset = offsetElem?.value || '0';
+    return [
+        `limit=${encodeURIComponent(limit)}`,
+        `offset=${encodeURIComponent(offset)}`
+    ];
 }
-
-/**
- * Generates and displays a cURL command, then fetches and displays the API response.
- * Also acts as a toggle to clear output if already displayed.
- * @param {string} baseEndpoint - The base API endpoint (e.g., '/health', '/incident').
- * @param {string|null} paramTypeSelectId - ID of the select element for parameter type (null if no params).
- * @param {string|null} nameInputId - ID of the name input field (null if not applicable).
- * @param {string|null} systemInputId - ID of the system input field (null if not applicable).
- * @param {string|null} filterSelectId - ID of the filter select element (null if not applicable).
- * @param {string} limitInputId - ID of the limit input field.
- * @param {string} offsetInputId - ID of the offset input field.
- * @param {string} curlOutputId - ID of the <pre> element to display the cURL command.
- * @param {string} fetchOutputId - ID of the <pre> element to display the API response.
- */
+// Generates and executes API calls with toggle functionality.
 async function generateCurlCommand(
     baseEndpoint,
     paramTypeSelectId,
@@ -452,117 +402,64 @@ async function generateCurlCommand(
     curlOutputId,
     fetchOutputId
 ) {
-    let endpoint = baseEndpoint;
-    const queryParams = [];
-
-    // Get the output element for the API response
     const outputElement = document.getElementById(fetchOutputId);
-    // Get the code element for the cURL command
     const curlCodeElement = document.getElementById(curlOutputId)?.querySelector('code');
-
-    // Toggle functionality: If output is already displayed, clear it and reset cURL command, then return.
-    if (outputElement.textContent.trim() !== '' && outputElement.textContent.trim() !== 'Loading...') {
-        outputElement.textContent = ''; // Clear the API response content
-        if (curlCodeElement) {
-            // Reset cURL command to its default for this endpoint, with default limit/offset
-            curlCodeElement.textContent = `curl -X GET "${baseUrl}${baseEndpoint}?limit=10&offset=0"`;
-        }
-        return; // Exit the function
+    if (!outputElement) {
+        console.error(`Output element with ID '${fetchOutputId}' not found`);
+        return;
     }
-
-    // Construct query parameters if a parameter type selector exists
+    // Toggle: clear output if already displayed
+    if (outputElement.textContent.trim() && outputElement.textContent.trim() !== 'Loading...') {
+        outputElement.textContent = '';
+        if (curlCodeElement) {
+            curlCodeElement.textContent = `curl -X GET "${baseUrl}${baseEndpoint}"`;
+        }
+        return;
+    }
+    // Build query parameters
+    const queryParams = [];
     if (paramTypeSelectId) {
         const paramType = document.getElementById(paramTypeSelectId)?.value;
-
-        if (paramType === 'name' && nameInputId) {
-            const nameValue = document.getElementById(nameInputId).value;
-            if (nameValue) {
-                queryParams.push(`name=${encodeURIComponent(nameValue)}`);
-            }
-        } else if (paramType === 'system' && systemInputId) {
-            const systemValue = document.getElementById(systemInputId).value;
-            if (systemValue) {
-                queryParams.push(`system=${encodeURIComponent(systemValue)}`);
-            }
-        } else if (paramType === 'filter' && filterSelectId) {
-            const filterValue = document.getElementById(filterSelectId).value;
-            if (filterValue) {
-                queryParams.push(`filter=${encodeURIComponent(filterValue)}`);
+        const inputMap = {
+            'name': nameInputId,
+            'system': systemInputId,
+            'filter': filterSelectId
+        };
+        const inputId = inputMap[paramType];
+        if (inputId) {
+            const value = document.getElementById(inputId)?.value;
+            if (value) {
+                queryParams.push(`${paramType}=${encodeURIComponent(value)}`);
             }
         }
     }
-
-    // Always add limit and offset parameters
-    queryParams.push(...getLimitOffsetParams(limitInputId, offsetInputId));
-
-    // Append query parameters to the endpoint if any exist
-    if (queryParams.length > 0) {
-        endpoint += `?${queryParams.join('&')}`;
+    // Add limit/offset if available
+    if (limitInputId && offsetInputId) {
+        queryParams.push(...getLimitOffsetParams(limitInputId, offsetInputId));
     }
-
+    // Build final URL
+    const endpoint = queryParams.length > 0 ? `${baseEndpoint}?${queryParams.join('&')}` : baseEndpoint;
     const fullUrl = `${baseUrl}${endpoint}`;
-
-    // Update the displayed cURL command
+    // Update cURL display
     if (curlCodeElement) {
         curlCodeElement.textContent = `curl -X GET "${fullUrl}"`;
     }
-
-    // Display loading message in the output area before fetching
+    // Execute API call
     outputElement.textContent = 'Loading...';
-
     try {
         const response = await fetch(fullUrl);
         const contentType = response.headers.get('content-type') || '';
-
         if (contentType.includes('application/json')) {
             const data = await response.json();
-            outputElement.textContent = JSON.stringify(data, null, 2); // Pretty print JSON
+            outputElement.textContent = JSON.stringify(data, null, 2);
         } else {
-            const text = await response.text();
-            outputElement.textContent = text;
+            outputElement.textContent = await response.text();
         }
     } catch (err) {
-        outputElement.textContent = `Error: ${err.message}`; // Display specific error message
+        outputElement.textContent = `Error: ${err.message}`;
     }
 }
-
-// This function is for the older, clickable pre elements found in the "Intro" section.
-// It is kept separate from generateCurlCommand as its purpose is different (direct click to fetch).
-async function testEndpoint(baseEndpoint, paramName, inputId, outputId) {
-    const output = document.getElementById(outputId);
-
-    // Toggle functionality: If output is already displayed, clear it, then return.
-    if (output.textContent.trim() !== '' && output.textContent.trim() !== 'Loading...') {
-        output.textContent = ''; // Clear the output content
-        return; // Exit the function
-    }
-
-    output.textContent = 'Loading...'; // Show loading message
-
-    let endpoint = baseEndpoint;
-    if (paramName && inputId) {
-        const inputValue = document.getElementById(inputId).value;
-        if (inputValue) {
-            endpoint += `?${paramName}=${encodeURIComponent(inputValue)}`;
-        }
-    }
-
-    try {
-        const response = await fetch(baseUrl + endpoint);
-        const contentType = response.headers.get('content-type') || '';
-        if (contentType.includes('application/json')) {
-            const data = await response.json();
-            output.textContent = JSON.stringify(data, null, 2);
-        } else {
-            const text = await response.text();
-            output.textContent = text;
-        }
-    } catch (err) {
-        output.textContent = `Error: ${err.message}`;
-    }
-}
-
-// Initial call to hide inputs on page load when the DOM is fully loaded
+// Initialize page when DOM loads
 document.addEventListener('DOMContentLoaded', () => {
     toggleIncidentInputs();
     toggleLocationInputs();
@@ -570,3 +467,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 </html>
+
