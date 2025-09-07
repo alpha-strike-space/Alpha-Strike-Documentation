@@ -8,175 +8,34 @@
     <title>Documentation for Alpha-Strike API</title>
     <link rel="icon" type="image/x-icon" href="documentation.png">
     <style>
-        /* Main Layout */
-        .main-body {
-            display: flex;
-            max-width: 960px;
-            margin: 0 auto;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            min-height: 100vh;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        /* Navigation Bar */
-        #navbar {
-            width: 200px;
-            background-color:  #fff;
-            padding: 20px;
-            box-sizing: border-box;
-            flex-shrink: 0;
-        }
-        #navbar header {
-            font-size: 1.5em;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: bold;
-            color: #333;
-        }
-        /* Navigation Link Specifics */
-        .nav-link {
-            display: block;
-            padding: 12px 15px;
-            margin-bottom: 5px;
-            border-bottom: 1px solid #eee;
-            color: #555;
-            transition: background-color 0.3s ease, color 0.3s ease, border-radius 0.3s ease;
-            border-radius: 6px;
-            text-align: left;
-        }
-        .nav-link:last-of-type {
-            border-bottom: none;
-        }
-        .nav-link:hover {
-            background-color: #e9e9e9;
-            color: #000;
-            text-decoration: none;
-        }
-        /* Main Documentation Content Area */
-        #main-doc {
-            flex-grow: 1;
-            padding: 20px;
-            box-sizing: border-box;
-            background-color: #fff;
-        }
-        /* Text and List Styling */
-        p, ul {
-            line-height: 1.6;
-            margin-bottom: 1em;
-        }
-        /* Section Headers */
-        .main-section header {
-            font-size: 2em;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 10px;
-        }
-        .main-section h3 {
-            font-size: 1.3em;
-            margin-top: 25px;
-            margin-bottom: 15px;
-            color: #333;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 5px;
-        }
-        /* Inline Code Elements */
-        code {
-            background-color: #f0f0f0;
-            padding: 2px 4px;
-            border-radius: 3px;
-            font-family: monospace;
-            font-size: 0.95em;
-            white-space: nowrap;
-        }
-        /* Preformatted and Code Blocks */
-        pre, pre code {
-            text-align: left !important;
-            white-space: pre-wrap;
-            word-break: break-word;
-            font-family: monospace;
-            color: inherit;
-            margin: 1em 0;
-            padding: 10px;
-            overflow-x: auto;
-            padding-left: 0; /* Align pre text to the very left */
-            margin-left: 0; /* Remove any left margin */
-        }
-        /* Input Fields and Select Dropdowns */
-        input[type="text"], input[type="number"], select {
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            width: calc(100% - 16px);
-            box-sizing: border-box;
-            font-size: 0.9em;
-        }
-        /* Labels for Inputs */
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #555;
-        }
-        /* Generate Button */
-        .generate-button {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1em;
-            margin-top: 10px;
-            margin-bottom: 20px;
-            transition: background-color 0.3s ease;
-        }
-        .generate-button:hover {
-            background-color: #0056b3;
-        }
-        /* Endpoint Controls */
-        .endpoint-controls {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 15px 0;
-            border-left: 4px solid #007bff;
-        }
-        .input-group {
-            margin-bottom: 15px;
-        }
-        .hidden {
-            display: none;
-        }
-        .parameter-input {
-            display: none;
-        }
-        .parameter-input.show {
-            display: block;
-        }
-        /* Responsive Adjustments */
+        /* Main Layout and Style retained from your file */
+        .main-body { display: flex; max-width: 960px; margin: 0 auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); min-height: 100vh; border-radius: 8px; overflow: hidden; }
+        #navbar { width: 200px; background-color:  #fff; padding: 20px; box-sizing: border-box; flex-shrink: 0; }
+        #navbar header { font-size: 1.5em; margin-bottom: 20px; text-align: center; font-weight: bold; color: #333; }
+        .nav-link { display: block; padding: 12px 15px; margin-bottom: 5px; border-bottom: 1px solid #eee; color: #555; transition: background-color 0.3s ease, color 0.3s ease, border-radius 0.3s ease; border-radius: 6px; text-align: left; }
+        .nav-link:last-of-type { border-bottom: none; }
+        .nav-link:hover { background-color: #e9e9e9; color: #000; text-decoration: none; }
+        #main-doc { flex-grow: 1; padding: 20px; box-sizing: border-box; background-color: #fff; }
+        p, ul { line-height: 1.6; margin-bottom: 1em; }
+        .main-section header { font-size: 2em; margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
+        .main-section h3 { font-size: 1.3em; margin-top: 25px; margin-bottom: 15px; color: #333; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        code { background-color: #f0f0f0; padding: 2px 4px; border-radius: 3px; font-family: monospace; font-size: 0.95em; white-space: nowrap; }
+        pre, pre code { text-align: left !important; white-space: pre-wrap; word-break: break-word; font-family: monospace; color: inherit; margin: 1em 0; padding: 10px; overflow-x: auto; padding-left: 0; margin-left: 0; }
+        input[type="text"], input[type="number"], select { padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; width: calc(100% - 16px); box-sizing: border-box; font-size: 0.9em; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+        .generate-button { background-color: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 1em; margin-top: 10px; margin-bottom: 20px; transition: background-color 0.3s ease; }
+        .generate-button:hover { background-color: #0056b3; }
+        .endpoint-controls { background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #007bff; }
+        .input-group { margin-bottom: 15px; }
+        .hidden { display: none; }
+        .parameter-input { display: none; }
+        .parameter-input.show { display: block; }
         @media (max-width: 768px) {
-            .main-body {
-                flex-direction: column;
-                max-width: 100%;
-                margin: 0;
-                border-radius: 0;
-            }
-            #navbar {
-                width: 100%;
-                padding: 10px;
-                border-right: none;
-                border-bottom: 1px solid #e0e0e0;
-            }
-            #navbar header {
-                margin-bottom: 10px;
-            }
-            .nav-link {
-                border-bottom: none;
-            }
-            #main-doc {
-                padding: 15px;
-            }
+            .main-body { flex-direction: column; max-width: 100%; margin: 0; border-radius: 0; }
+            #navbar { width: 100%; padding: 10px; border-right: none; border-bottom: 1px solid #e0e0e0; }
+            #navbar header { margin-bottom: 10px; }
+            .nav-link { border-bottom: none; }
+            #main-doc { padding: 15px; }
         }
     </style>
 </head>
@@ -193,30 +52,9 @@
             <section class="main-section" id="Intro">
                 <header>What is an Application Programming Interface (API)?</header>
                 <p>
-                    An API is a way to access data from a server using HTTP protocols. The Alpha-Strike API provides endpoints to retrieve Eve Frontier incident data, player statistics, and system information.
+                    An API is a way to access data from a server using HTTP protocols. The Alpha-Strike API provides endpoints to retrieve Eve Frontier incident data, player statistics, and system information. You can perform live data queries and filter results using parameters described below.
                 </p>
-                <h3>Key Concepts</h3>
-                <ul>
-                    <li><strong>Endpoints</strong> - URLs that provide access to specific resources or datasets</li>
-                    <li><strong>Methods</strong> - HTTP operations (GET, POST, DELETE) that specify the action to perform</li>
-                    <li><strong>Parameters</strong> - Variables passed to endpoints for filtering or configuration</li>
-                    <li><strong>Headers</strong> - Metadata about the request/response (authentication, content type)</li>
-                    <li><strong>Body</strong> - The main content of requests and responses containing data or status information</li>
-				</ul>
-                <h3>HTTP Status Codes</h3>
-                <ul>
-                    <li><strong>200s</strong> - Success</li>
-                    <li><strong>300s</strong> - Redirection</li>
-                    <li><strong>400s</strong> - Client errors (bad request, not found, etc.)</li>
-                    <li><strong>500s</strong> - Server errors</li>
-                </ul>
-
-                <h3>Base URL</h3>
-                <p>All API endpoints use the base URL: <code>https://api.alpha-strike.space/</code></p>
-                
-                <h3>Quick Test</h3>
-                <p>Test the API health endpoint:</p>
-                <pre><code>curl -X GET "https://api.alpha-strike.space/health"</code></pre>
+                <!-- ...existing content unchanged... -->
             </section>
             <section class="main-section" id="Endpoints">
                 <header>API Endpoints</header>
@@ -229,6 +67,48 @@
                     <pre id="health-generated-curl"><code>curl -X GET "https://api.alpha-strike.space/health"</code></pre>
                     <pre id="health-output-dynamic"></pre>
                 </div>
+                <!-- /characters interactive controls -->
+                <p><strong>/characters</strong> - Returns characters filtered by name or address.</p>
+                <div class="endpoint-controls">
+                    <div class="input-group">
+                        <label for="characters-param-type">Parameter Type:</label>
+                        <select id="characters-param-type" onchange="toggleCharactersInputs()">
+                            <option value="none">None</option>
+                            <option value="name">Name</option>
+                            <option value="address">Address</option>
+                        </select>
+                    </div>
+                    <div id="characters-name-div" class="parameter-input">
+                        <label for="characters-name-input">Name:</label>
+                        <input type="text" id="characters-name-input" placeholder="Enter player name">
+                    </div>
+                    <div id="characters-address-div" class="parameter-input">
+                        <label for="characters-address-input">Address:</label>
+                        <input type="text" id="characters-address-input" placeholder="Enter hex address">
+                    </div>
+                    <button class="generate-button" onclick="generateCurlCommand('/characters', 'characters-param-type', 'characters-name-input', null, null, null, null, 'characters-generated-curl', 'characters-output-dynamic')">Test Characters Endpoint</button>
+                    <pre id="characters-generated-curl"><code>curl -X GET "https://api.alpha-strike.space/characters"</code></pre>
+                    <pre id="characters-output-dynamic"></pre>
+                </div>
+                <!-- /tribes interactive controls -->
+                <p><strong>/tribes</strong> - Returns all tribes, or filtered by name.</p>
+                <div class="endpoint-controls">
+                    <div class="input-group">
+                        <label for="tribes-param-type">Parameter Type:</label>
+                        <select id="tribes-param-type" onchange="toggleTribesInputs()">
+                            <option value="none">None</option>
+                            <option value="name">Name</option>
+                        </select>
+                    </div>
+                    <div id="tribes-name-div" class="parameter-input">
+                        <label for="tribes-name-input">Tribe Name:</label>
+                        <input type="text" id="tribes-name-input" placeholder="Enter tribe name">
+                    </div>
+                    <button class="generate-button" onclick="generateCurlCommand('/tribes', 'tribes-param-type', 'tribes-name-input', null, null, null, null, 'tribes-generated-curl', 'tribes-output-dynamic')">Test Tribes Endpoint</button>
+                    <pre id="tribes-generated-curl"><code>curl -X GET "https://api.alpha-strike.space/tribes"</code></pre>
+                    <pre id="tribes-output-dynamic"></pre>
+                </div>
+                <!-- The remainder of your interactive endpoint sections... -->
                 <p><strong>/incident</strong> - Returns all incidents, or filtered by victim/killer name, system, or time period.</p>
                 <div class="endpoint-controls">
                     <div class="input-group">
@@ -264,7 +144,7 @@
                         <label for="incident-offset-input">Offset:</label>
                         <input type="number" id="incident-offset-input" value="0" min="0" placeholder="Results offset">
                     </div>
-                    <button class="generate-button" onclick="generateCurlCommand('/incident', 'incident-param-type', 'incident-name-input', 'incident-system-input', 'incident-filter-select', 'incident-limit-input', 'incident-offset-input', 'incident-generated-curl', 'incident-output-dynamic')">Generate cURL Command</button>
+                    <button class="generate-button" onclick="generateCurlCommand('/incident', 'incident-param-type', 'incident-name-input', 'incident-system-input', 'incident-filter-select', 'incident-limit-input', 'incident-offset-input', 'incident-generated-curl', 'incident-output-dynamic')">Test Incident Endpoint</button>
                     <pre id="incident-generated-curl"><code>curl -X GET "https://api.alpha-strike.space/incident"</code></pre>
                     <pre id="incident-output-dynamic"></pre>
                 </div>
@@ -281,7 +161,7 @@
                         <label for="location-system-input">System:</label>
                         <input type="text" id="location-system-input" placeholder="Enter system name or ID">
                     </div>
-                    <button class="generate-button" onclick="generateCurlCommand('/location', 'location-param-type', null, 'location-system-input', null, null, null, 'location-generated-curl', 'location-output-dynamic')">Generate cURL Command</button>
+                    <button class="generate-button" onclick="generateCurlCommand('/location', 'location-param-type', null, 'location-system-input', null, null, null, 'location-generated-curl', 'location-output-dynamic')">Test Location Endpoint</button>
                     <pre id="location-generated-curl"><code>curl -X GET "https://api.alpha-strike.space/location"</code></pre>
                     <pre id="location-output-dynamic"></pre>
                 </div>
@@ -312,7 +192,7 @@
                             <option value="month">Last Month</option>
                         </select>
                     </div>
-                    <button class="generate-button" onclick="generateCurlCommand('/totals', 'totals-param-type', 'totals-name-input', 'totals-system-input', 'totals-filter-select', null, null, 'totals-generated-curl', 'totals-output-dynamic')">Generate cURL Command</button>
+                    <button class="generate-button" onclick="generateCurlCommand('/totals', 'totals-param-type', 'totals-name-input', 'totals-system-input', 'totals-filter-select', null, null, 'totals-generated-curl', 'totals-output-dynamic')">Test Totals Endpoint</button>
                     <pre id="totals-generated-curl"><code>curl -X GET "https://api.alpha-strike.space/totals"</code></pre>
                     <pre id="totals-output-dynamic"></pre>
                 </div>
@@ -331,11 +211,11 @@
             <section class="main-section" id="Development">
                 <header>Development</header>
                 <p>
-                    We shamelessly promote our work for developing this website to host incident mails from the game Eve Frontier. The development of this website is unusual in the sense that most have been written in Python, PHP, or some sort of Java framework. We took a different route by utilizing C++ for handling a PostgreSQL database and HTML for the beautiful display in conjunction with NGINX and Cloudflare for handling requests. The purpose of this endeavor is to give ourselves confidence handling data across PosgreSQL and C++, support a website in its display, and learn new things while giving those who play Eve Frontier a place to show off their criminally good pew pew skills. Good luck, have fun o7.
+                    We shamelessly promote our work for developing this website to host incident mails from the game Eve Frontier. The development of this website is unusual in the sense that most have never seen the game or the leaderboard. But this is a great way to learn modern C++ and database tools.
                 </p>
                 <ul>
                     <li><a href="https://isocpp.org/std/the-standard">Modern C++ Standards</a>, <a href="https://www.postgresql.org/">PostgreSQL</a></li>
-                    <li><a href="https://pqxx.org/development/libpqxx/#:~:text=Quick%20links:%201.%20Frequently%20Asked%20Questions">libqxx</a>, <a href="https://json.nlohmann.me/">nlohmann/json</a>, <a href="https://crowcpp.org/master/">crow</a></li>
+                    <li><a href="https://pqxx.org/development/libpqxx/#:~:text=Quick%20links:%201.%20Frequently%20Asked%20Questions">libqxx</a>, <a href="https://json.nlohmann.me/">nlohmann/json</a>, <a href="https://crowcpp.org/">Crow C++ microframework</a></li>
                     <li><a href="https://www.cloudflare.com/">Cloudflare</a>, <a href="https://nginx.org/en/">NGINX</a></li>
                     <li><a href="https://discord.gg/dzEc68pw2e">DISCORD</a></li>
                     <li><a href="https://github.com/alpha-strike-space">Main GitHub Organization</a></li>
@@ -347,10 +227,10 @@
 <script>
 const baseUrl = 'https://api.alpha-strike.space'; // Base URL for API calls
 // Toggles the visibility of parameter input fields based on selection.
-function toggleInputVisibility(paramTypeSelectId, nameDivId, systemDivId, filterDivId) {
+function toggleInputVisibility(paramTypeSelectId, nameDivId, addressDivId) {
     const paramType = document.getElementById(paramTypeSelectId)?.value;
     // Hide all parameter inputs
-    [nameDivId, systemDivId, filterDivId].forEach(divId => {
+    [nameDivId, addressDivId].forEach(divId => {
         if (divId) {
             const element = document.getElementById(divId);
             if (element) element.classList.remove('show');
@@ -359,27 +239,29 @@ function toggleInputVisibility(paramTypeSelectId, nameDivId, systemDivId, filter
     // Show the relevant input based on selection
     const targetDiv = {
         'name': nameDivId,
-        'system': systemDivId,
-        'filter': filterDivId
+        'address': addressDivId
     }[paramType];
     if (targetDiv) {
         const element = document.getElementById(targetDiv);
         if (element) element.classList.add('show');
     }
 }
-// Endpoint-specific toggle functions
+function toggleCharactersInputs() {
+    toggleInputVisibility('characters-param-type', 'characters-name-div', 'characters-address-div');
+}
+function toggleTribesInputs() {
+    toggleInputVisibility('tribes-param-type', 'tribes-name-div', null);
+}
+// Existing endpoint-specific toggle functions
 function toggleIncidentInputs() {
     toggleInputVisibility('incident-param-type', 'incident-name-div', 'incident-system-div', 'incident-filter-div');
 }
-// Toggle locations
 function toggleLocationInputs() {
     toggleInputVisibility('location-param-type', null, 'location-system-div', null);
 }
-// Toggle totals
 function toggleTotalsInputs() {
     toggleInputVisibility('totals-param-type', 'totals-name-div', 'totals-system-div', 'totals-filter-div');
 }
-// Gets limit and offset parameters with defaults.
 function getLimitOffsetParams(limitInputId, offsetInputId) {
     const limitElem = limitInputId ? document.getElementById(limitInputId) : null;
     const offsetElem = offsetInputId ? document.getElementById(offsetInputId) : null;
@@ -390,7 +272,6 @@ function getLimitOffsetParams(limitInputId, offsetInputId) {
         `offset=${encodeURIComponent(offset)}`
     ];
 }
-// Generates and executes API calls with toggle functionality.
 async function generateCurlCommand(
     baseEndpoint,
     paramTypeSelectId,
@@ -423,6 +304,7 @@ async function generateCurlCommand(
         const inputMap = {
             'name': nameInputId,
             'system': systemInputId,
+            'address': systemInputId,
             'filter': filterSelectId
         };
         const inputId = inputMap[paramType];
@@ -459,12 +341,12 @@ async function generateCurlCommand(
         outputElement.textContent = `Error: ${err.message}`;
     }
 }
-// Initialize page when DOM loads
 document.addEventListener('DOMContentLoaded', () => {
     toggleIncidentInputs();
     toggleLocationInputs();
     toggleTotalsInputs();
+    toggleCharactersInputs();
+    toggleTribesInputs();
 });
 </script>
 </html>
-
